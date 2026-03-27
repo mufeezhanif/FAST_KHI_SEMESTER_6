@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS4051 Information Retrieval — Exam Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #faf7f0;
+    --cream: #f3ede0;
+    --accent: #8b1a1a;
+    --accent2: #2d5016;
+    --accent3: #1a3a6b;
+    --gold: #c8942a;
+    --rule: #d4c8a8;
+    --highlight: #fff3cd;
+    --code-bg: #1e1e2e;
+    --code-fg: #cdd6f4;
+    --sidebar: #2a1a0a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--sidebar);
+    color: #f3ede0;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(200,148,42,.04) 30px,
+      rgba(200,148,42,.04) 31px
+    );
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .site-header h1 span { color: var(--gold); }
+  .site-header p {
+    font-size: .85rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #bba882;
+    margin-top: .6rem;
+    position: relative;
+  }
+
+  /* ── NAV ── */
+  .toc-bar {
+    background: var(--accent);
+    color: #fff;
+    padding: .6rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem 1.5rem;
+    justify-content: center;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .toc-bar a {
+    color: #ffd;
+    text-decoration: none;
+    padding: .15rem .4rem;
+    border-radius: 2px;
+    transition: background .2s;
+  }
+  .toc-bar a:hover { background: rgba(255,255,255,.15); }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── CHAPTER ── */
+  .chapter {
+    margin-bottom: 4rem;
+    border-top: 3px solid var(--rule);
+    padding-top: 2rem;
+  }
+
+  .chapter-label {
+    font-size: .7rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    margin-bottom: .3rem;
+  }
+
+  .chapter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--sidebar);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 2.2rem; }
+  .section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: .8rem;
+    padding-bottom: .3rem;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  .section h4 {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--accent3);
+    margin: 1rem 0 .5rem;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  p { margin-bottom: .9rem; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    border-left: 4px solid var(--accent3);
+    background: #f0f4fa;
+    padding: .9rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .def-box .label {
+    font-size: .7rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    font-weight: 700;
+    margin-bottom: .3rem;
+  }
+  .def-box p { margin: 0; font-style: italic; }
+
+  /* ── KEY POINT ── */
+  .key-point {
+    border-left: 4px solid var(--gold);
+    background: var(--highlight);
+    padding: .9rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .key-point strong { color: var(--accent); }
+
+  /* ── FORMULA ── */
+  .formula {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .88rem;
+    padding: 1rem 1.3rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    border-left: 3px solid var(--gold);
+  }
+
+  /* ── ALGORITHM ── */
+  .algo {
+    background: #f8f6ff;
+    border: 1.5px solid #c8b8e8;
+    border-radius: 6px;
+    padding: 1rem 1.3rem;
+    margin: 1rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem;
+    line-height: 1.6;
+  }
+  .algo .algo-title {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 700;
+    font-size: .9rem;
+    color: #5a3a9a;
+    margin-bottom: .6rem;
+    border-bottom: 1px solid #c8b8e8;
+    padding-bottom: .4rem;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: .88rem;
+  }
+  th {
+    background: var(--sidebar);
+    color: #f3ede0;
+    padding: .55rem .9rem;
+    text-align: left;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: .8rem;
+    letter-spacing: .05em;
+  }
+  td {
+    padding: .45rem .9rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--cream); }
+
+  /* ── EXAM TIP ── */
+  .exam-tip {
+    border: 1.5px dashed var(--accent2);
+    background: #f0f9f0;
+    padding: .85rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
+  .exam-tip .et-label {
+    font-size: .7rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 700;
+    margin-bottom: .3rem;
+  }
+
+  /* ── COMPARE ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .compare-col {
+    border: 1.5px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .compare-col .col-head {
+    background: var(--cream);
+    padding: .5rem .9rem;
+    font-weight: 700;
+    font-size: .85rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--accent3);
+  }
+  .compare-col ul {
+    padding: .7rem .9rem .7rem 1.5rem;
+    font-size: .88rem;
+  }
+  .compare-col li { margin-bottom: .35rem; }
+
+  /* ── INLINE CODE ── */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82em;
+    background: var(--cream);
+    padding: .1em .4em;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  ul, ol { padding-left: 1.5rem; margin-bottom: .9rem; }
+  li { margin-bottom: .3rem; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--cream);
+    border-top: 3px solid var(--gold);
+    padding: .9rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: .9rem;
+  }
+
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .site-header h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>CS4051 <span>Information Retrieval</span></h1>
+  <p>Comprehensive Exam-Ready Notes · Chapters 1–6 · Based on Manning, Raghavan & Schütze (2008)</p>
+</header>
+
+<nav class="toc-bar">
+  <a href="#ch1">Ch 1 · Boolean Retrieval</a>
+  <a href="#ch2">Ch 2 · Term Vocabulary & Postings</a>
+  <a href="#ch3">Ch 3 · Dictionaries & Tolerant Retrieval</a>
+  <a href="#ch4">Ch 4 · Index Construction</a>
+  <a href="#ch5">Ch 5 · Index Compression</a>
+  <a href="#ch6">Ch 6 · Scoring & VSM</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 1                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="chapter" id="ch1">
+  <div class="chapter-label">Chapter 1</div>
+  <h2>Boolean Retrieval</h2>
+
+  <div class="section">
+    <h3>1.1 What is Information Retrieval?</h3>
+    <div class="def-box">
+      <div class="label">Definition</div>
+      <p><strong>Information Retrieval (IR)</strong> is finding material (usually documents) of an unstructured nature (usually text) that satisfies an information need from within large collections (usually stored on computers).</p>
+    </div>
+    <p>The simplest retrieval is <strong>linear scanning (grepping)</strong> — reading through every document sequentially. This works for small collections but becomes impractical for large ones because:</p>
+    <ul>
+      <li>Modern collections contain billions to trillions of words.</li>
+      <li>Flexible matching (e.g., "Romans <em>near</em> countrymen") is impractical to grep.</li>
+      <li>Ranked retrieval is not supported — grep only finds matches, not the best matches.</li>
+    </ul>
+    <p>The solution is to <strong>index documents in advance</strong> using an inverted index.</p>
+  </div>
+
+  <div class="section">
+    <h3>1.2 Term-Document Incidence Matrix</h3>
+    <p>The most basic data structure: a binary matrix where rows = terms, columns = documents, and a cell is <code>1</code> if the term appears in the document, <code>0</code> otherwise.</p>
+    <div class="key-point">
+      <strong>Problem:</strong> This matrix is extremely sparse (mostly 0s) and impractical to store for large collections. Shakespeare's works → 32,000 terms × ~37 plays = manageable. But 1,000,000 web docs × 500,000 terms = 500 billion cells.
+    </div>
+    <p><strong>Solution:</strong> Store only the 1s — the <em>inverted index</em>.</p>
+  </div>
+
+  <div class="section">
+    <h3>1.3 The Inverted Index</h3>
+    <p>An inverted index consists of:</p>
+    <ul>
+      <li><strong>Dictionary</strong>: a sorted list of all distinct terms (vocabulary).</li>
+      <li><strong>Postings lists</strong>: for each term, a list of the documents (docIDs) in which it appears.</li>
+    </ul>
+
+    <h4>Building a Basic Inverted Index</h4>
+    <ol>
+      <li>Make a pass through the collection assembling all <strong>term–docID pairs</strong>.</li>
+      <li>Sort the pairs with the <strong>term as dominant key</strong> and docID as secondary key.</li>
+      <li>Organize docIDs for each term into a postings list; compute term and document frequency statistics.</li>
+    </ol>
+
+    <div class="callout">
+      <strong>Example:</strong> For "friends romans countrymen" — after tokenization and normalization: <code>friend → [doc1, doc2]</code>, <code>roman → [doc2]</code>, <code>countryman → [doc1]</code>.
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>1.4 Processing Boolean Queries</h3>
+    <p>Boolean queries use AND, OR, NOT operators. Processing uses postings list operations.</p>
+
+    <h4>AND Query (Intersection)</h4>
+    <p>Walk through both postings lists simultaneously in sorted order. If docIDs match → add to result. Otherwise advance the pointer with the smaller docID.</p>
+    <div class="formula">Complexity: O(m + n)  where m = |postings(t1)|, n = |postings(t2)|</div>
+
+    <h4>Query Optimization for AND</h4>
+    <div class="key-point">
+      <strong>Key principle:</strong> Process terms in <em>increasing order of document frequency</em>. Start with the term that has the fewest postings — it will prune the result set fastest. This minimizes the number of comparisons.
+    </div>
+
+    <h4>NOT Operator</h4>
+    <p>Use a bit-vector or complement. "NOT X" = all docIDs not in postings(X). OR: walk two lists and exclude matches.</p>
+
+    <h4>OR Query (Union)</h4>
+    <p>Walk both lists; add docID if it appears in either. Also O(m + n).</p>
+  </div>
+
+  <div class="section">
+    <h3>1.5 Extended Boolean Model vs. Ranked Retrieval</h3>
+    <p>Limitations of the Boolean model:</p>
+    <ul>
+      <li>Requires users to formulate precise Boolean expressions — most users find this unnatural.</li>
+      <li>Binary relevance: a document either matches or does not — no notion of "how well" it matches.</li>
+      <li>AND queries often return too few results; OR queries return too many.</li>
+    </ul>
+    <p>Extensions include <strong>proximity search</strong> (e.g., WestLaw's <code>/s</code> = within sentence, <code>/n</code> = within n words) and <strong>ranked retrieval</strong> (introduced in Chapter 6).</p>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Be ready to: (1) draw the term-document matrix for a small collection, (2) process a Boolean AND/OR/NOT query step-by-step using postings lists, (3) explain why query optimization (ordering terms by frequency) is important.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 2                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="chapter" id="ch2">
+  <div class="chapter-label">Chapter 2</div>
+  <h2>The Term Vocabulary and Postings Lists</h2>
+
+  <div class="section">
+    <h3>2.1 Key Definitions</h3>
+    <table>
+      <tr><th>Term</th><th>Definition</th></tr>
+      <tr><td><strong>Word</strong></td><td>A delimited string of characters as it appears in the text.</td></tr>
+      <tr><td><strong>Term</strong></td><td>A "normalized" word (case, morphology, spelling, etc.); an equivalence class of words — the actual entry in the IR dictionary.</td></tr>
+      <tr><td><strong>Token</strong></td><td>An instance of a word or term occurring in a document (after splitting).</td></tr>
+      <tr><td><strong>Type</strong></td><td>An equivalence class of tokens; generally the same as "term."</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>2.2 Determining the Vocabulary of Terms</h3>
+
+    <h4>2.2.1 Tokenization</h4>
+    <p>Tokenization splits a stream of characters into tokens. Issues include:</p>
+    <ul>
+      <li><strong>Apostrophes:</strong> Finland's → "Finland" and "s"? Or "Finlands"?</li>
+      <li><strong>Hyphens:</strong> Hewlett-Packard → one or two tokens? co-education?</li>
+      <li><strong>Numbers:</strong> 3/20/91, B-52, (800) 234-2333</li>
+      <li><strong>Multi-word entities:</strong> "San Francisco" — one token or two?</li>
+      <li><strong>Languages:</strong> French (elision), German (compound words), Chinese/Japanese (no spaces), Arabic (right-to-left)</li>
+    </ul>
+
+    <h4>2.2.2 Stop Words</h4>
+    <p>Stop words are the most common words that carry little semantic content: <em>the, a, and, to, be</em>. The top 30 words account for ~30% of all tokens.</p>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="col-head">Arguments FOR stop lists</div>
+        <ul>
+          <li>Reduces index size significantly.</li>
+          <li>Common words have little discriminative power for retrieval.</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="col-head">Arguments AGAINST stop lists</div>
+        <ul>
+          <li>Good compression makes storage cheap.</li>
+          <li>Needed for phrase queries: "King of Denmark", "To be or not to be"</li>
+          <li>Modern query optimization minimizes query-time cost.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>Current trend:</strong> Away from using stop lists, especially in large-scale systems.</p>
+
+    <h4>2.2.3 Normalization</h4>
+    <p>Normalize indexed text and query words into the same form. Common techniques:</p>
+    <ul>
+      <li><strong>Case folding:</strong> Reduce all letters to lower case. Exception: mid-sentence proper nouns (General Motors).</li>
+      <li><strong>Accents/diacritics:</strong> Normalize résumé→resume, Tübingen→Tubingen (users often omit accents).</li>
+      <li><strong>Equivalence classes:</strong> car = automobile (via thesaurus), colour = color.</li>
+      <li><strong>Asymmetric expansion:</strong> "window" → search for "window, windows"; "Windows" → search only "Windows".</li>
+    </ul>
+
+    <h4>2.2.4 Stemming</h4>
+    <p>A rule-based process that reduces different forms of words to a stem (root). Addresses dimensionality reduction.</p>
+    <div class="key-point">
+      <strong>Porter Stemmer</strong> (most widely used): Initialization (lowercase, keep only letters/digits) → 1 prefix phase → 5 suffix-stripping phases.
+      <br>Example phases: Step 1 removes -s, -es, -ied; Step 2 replaces suffixes like -tional→-tion; Steps 3–5 remove more complex suffixes.
+    </div>
+    <p><strong>Effect on a 10,000-word vocabulary:</strong> Reduces vocabulary by ~1/3 (6,370 distinct stems).</p>
+    <p><strong>Trade-off:</strong> Stemming increases recall but can hurt precision (operative, operational, operating all → "oper").</p>
+
+    <h4>2.2.5 Lemmatization</h4>
+    <p>Reduces inflectional/variant forms to proper dictionary headword (lemma) using morphological analysis and context.</p>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="col-head">Stemming</div>
+        <ul>
+          <li>Rule-based, fast, no context needed.</li>
+          <li>May produce non-words ("oper").</li>
+          <li>Heuristic — can over-stem or under-stem.</li>
+          <li>Better recall, sometimes worse precision.</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="col-head">Lemmatization</div>
+        <ul>
+          <li>Uses dictionary + context (POS tagging).</li>
+          <li>Produces valid dictionary forms.</li>
+          <li>Slower and harder to implement.</li>
+          <li>Better precision, but recall gains smaller.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4>2.2.6 Morphology</h4>
+    <ul>
+      <li><strong>Inflectional morphology:</strong> Suffix added without changing grammatical category — run → runs, running, ran. Semantically regular.</li>
+      <li><strong>Derivational morphology:</strong> Creates new words, may change category — nation (noun) → national (adj) → nationalize (verb). Semantically irregular.</li>
+    </ul>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Classic exam question: "Are these statements True/False? (1) Stemming never lowers precision — FALSE. (2) Stemming never lowers recall — TRUE. (3) Stemming increases vocabulary size — FALSE. (4) Stemming should only be applied at indexing time — FALSE (must apply to queries too)."
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>2.3 Skip Pointers for Faster Postings Intersection</h3>
+    <p>Standard AND merge is O(m+n). Skip pointers allow jumping ahead in a postings list, avoiding comparisons with entries that will not be in the intersection.</p>
+
+    <h4>How Skip Pointers Work</h4>
+    <p>At each skip point, we store a pointer ahead in the list and the docID at that position. If <code>docID(skip(p1)) ≤ docID(p2)</code>, we can skip p1 ahead to <code>skip(p1)</code> without visiting intermediate entries.</p>
+
+    <h4>Where to Place Skip Pointers</h4>
+    <div class="key-point">
+      <strong>Simple heuristic (Moffat & Zobel, 1996):</strong> For a postings list of length L, place <code>√L</code> evenly spaced skip pointers.
+    </div>
+    <p><strong>Trade-off:</strong> More skips → shorter skip spans → more pointer comparisons. Fewer skips → fewer comparisons but rarely able to skip. The √L rule balances these.</p>
+    <p>Note: With modern memory-based indexing, the I/O savings from skip pointers may be less significant than the overhead of extra comparisons.</p>
+  </div>
+
+  <div class="section">
+    <h3>2.4 Positional Postings and Phrase Queries</h3>
+
+    <h4>2.4.1 Bi-word Indexes</h4>
+    <p>Index every consecutive pair of terms as a phrase. "Friends Romans Countrymen" → "friends romans" + "romans countrymen".</p>
+    <ul>
+      <li><strong>Pro:</strong> Two-word phrase queries are immediate.</li>
+      <li><strong>Con:</strong> Longer phrases require Boolean combination of biwords, which can produce false positives. Dictionary bloat (doubles index size).</li>
+    </ul>
+    <p><strong>Extended biwords:</strong> Use POS tagging to identify N X*N patterns (Noun-Article/Prep-Noun) as extended biwords. Example: "coins are in pocket" → NX XN → index "coin pocket".</p>
+
+    <h4>2.4.2 Positional Indexes</h4>
+    <p>Store for each term the positions in which it appears within each document:</p>
+    <div class="formula">⟨term, doc_freq; doc1: pos1, pos2, …; doc2: pos1, …; …⟩</div>
+    <p>For phrase queries, use a merge algorithm that checks positional proximity. For "to be or not to be", we need positions where all terms appear in consecutive order.</p>
+
+    <h4>Positional Intersect Algorithm</h4>
+    <p>For a k-word phrase: merge docID lists first; then for matching docIDs, check that positions form a consecutive sequence (positions differ by exactly 1 for each successive term pair).</p>
+    <p>For <strong>proximity queries</strong> (WITHIN k words): check <code>|pos(t1) - pos(t2)| ≤ k</code>.</p>
+
+    <h4>Positional Index Size</h4>
+    <table>
+      <tr><th>Document size</th><th>Regular postings</th><th>Positional postings</th></tr>
+      <tr><td>1,000 terms (web page)</td><td>1 per doc</td><td>1 per doc</td></tr>
+      <tr><td>100,000 terms (book)</td><td>1 per doc</td><td>100 per doc</td></tr>
+    </table>
+    <p><strong>Rules of thumb:</strong> Positional index is 2–4× larger than non-positional index; takes 35–50% of original text volume.</p>
+
+    <h4>Combination Strategy</h4>
+    <p>Use biword index for common phrases and positional index for general phrase/proximity queries. Williams et al. (2004): a mixed scheme executes a typical web query mix in ¼ of the time of positional-only, at a 26% space overhead.</p>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Understand why biword indexes have false positives and why positional indexes are larger. Be able to trace through a positional intersect algorithm for a 2–3 term phrase query.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 3                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="chapter" id="ch3">
+  <div class="chapter-label">Chapter 3</div>
+  <h2>Dictionaries and Tolerant Retrieval</h2>
+
+  <div class="section">
+    <h3>3.1 Search Structures for Dictionaries</h3>
+    <p>Two main data structures for the dictionary:</p>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="col-head">Hash Tables</div>
+        <ul>
+          <li>O(1) lookup — very fast.</li>
+          <li>No prefix search (can't find all words starting with "hyp").</li>
+          <li>Can't find minor variants easily.</li>
+          <li>Expensive rehashing when vocabulary grows.</li>
+          <li>Not suitable for wildcard or spelling-correction lookups.</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="col-head">B-Trees</div>
+        <ul>
+          <li>O(log M) lookup — slightly slower.</li>
+          <li>Supports prefix search natively.</li>
+          <li>Supports range queries on ordered values.</li>
+          <li>Balancing adds complexity (B-trees mitigate this vs binary trees).</li>
+          <li>Preferred for tolerant retrieval scenarios.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>3.2 Wildcard Queries</h3>
+    <p>Users use wildcard queries when uncertain of spelling, aware of multiple spellings, or dealing with foreign words. The <code>*</code> matches any sequence of characters.</p>
+
+    <h4>Trailing Wildcard: <code>mon*</code></h4>
+    <p>Easy with B-tree: retrieve all terms in range <code>mon ≤ w < moo</code>.</p>
+
+    <h4>Leading Wildcard: <code>*mon</code></h4>
+    <p>Maintain a second reversed B-tree. Reverse both the query and dictionary terms: look up range <code>nom ≤ w < non</code> in the reversed tree.</p>
+
+    <h4>General Wildcard: <code>co*tion</code></h4>
+    <p>Problem: the wildcard is in the middle. Two solutions:</p>
+
+    <h4>3.2.1 Permuterm Index</h4>
+    <p>For each term, add a <code>$</code> sentinel and generate all rotations:</p>
+    <div class="formula">hello → hello$, ello$h, llo$he, lo$hel, o$hell</div>
+    <p>Index all rotations; each rotation's key points to the original term.</p>
+    <p><strong>Query lookup table:</strong></p>
+    <table>
+      <tr><th>Query Pattern</th><th>Lookup Key</th></tr>
+      <tr><td><code>X*</code></td><td><code>$X*</code></td></tr>
+      <tr><td><code>*X</code></td><td><code>X$*</code></td></tr>
+      <tr><td><code>*X*</code></td><td><code>X*</code></td></tr>
+      <tr><td><code>X*Y</code></td><td><code>Y$X*</code></td></tr>
+    </table>
+    <div class="key-point">
+      <strong>Example:</strong> <code>hel*o</code> (X=hel, Y=o) → look up <code>o$hel*</code> in permuterm index.
+    </div>
+    <p><strong>Drawback:</strong> Empirically quadruples the lexicon size for English.</p>
+
+    <h4>3.2.2 Bigram (k-gram) Indexes</h4>
+    <p>Enumerate all k-grams (k=2 is most common) in every term, including a special <code>$</code> word-boundary symbol. Build a second index: bigram → list of vocabulary terms containing it.</p>
+    <p><strong>Query:</strong> For <code>mon*</code>: compute bigrams <code>$m, mo, on</code> → retrieve all terms matching these bigrams → post-filter against original pattern <code>mon*</code>.</p>
+    <div class="key-point">
+      <strong>Advantage over Permuterm:</strong> Space-efficient (no quadrupling). Allows overlap Jaccard-style scoring. Existing inverted index infrastructure can be reused.
+    </div>
+    <p><strong>Drawback:</strong> Requires post-filtering because the bigram index is a superset (false positives may appear). Query execution may result in large disjunctions.</p>
+  </div>
+
+  <div class="section">
+    <h3>3.3 Spelling Correction</h3>
+
+    <h4>Two Uses</h4>
+    <ul>
+      <li><strong>Document correction:</strong> Especially for OCR'd documents. Domain-specific errors (rn/m confusion).</li>
+      <li><strong>Query correction:</strong> "Did you mean X?" suggestions for misspelled queries.</li>
+    </ul>
+
+    <h4>Two Flavors</h4>
+    <ul>
+      <li><strong>Isolated-word correction:</strong> Check each word independently. Will miss context errors like "from" → "form" (both valid words).</li>
+      <li><strong>Context-sensitive correction:</strong> Use surrounding context to detect errors. Needed for "I flew form Heathrow" → should be "from".</li>
+    </ul>
+
+    <h4>3.3.1 Edit Distance (Levenshtein Distance)</h4>
+    <div class="def-box">
+      <div class="label">Definition</div>
+      <p>The minimum number of single-character edit operations (insert, delete, replace, optionally transpose) needed to transform one string into another.</p>
+    </div>
+    <p>Examples: dof→dog = 1 (replace f→g). cat→act = 2 (or 1 with transposition). cat→dog = 3.</p>
+
+    <div class="algo">
+      <div class="algo-title">EditDistance(s₁, s₂) — Dynamic Programming</div>
+      Initialize m[i,j] = 0<br>
+      for i = 1 to |s₁|: m[i,0] = i<br>
+      for j = 1 to |s₂|: m[0,j] = j<br>
+      for i = 1 to |s₁|:<br>
+      &nbsp; for j = 1 to |s₂|:<br>
+      &nbsp;&nbsp; m[i,j] = min(<br>
+      &nbsp;&nbsp;&nbsp; m[i-1,j-1] + (s₁[i]≠s₂[j] ? 1 : 0),  // replace<br>
+      &nbsp;&nbsp;&nbsp; m[i-1,j] + 1,                           // delete<br>
+      &nbsp;&nbsp;&nbsp; m[i,j-1] + 1                            // insert<br>
+      &nbsp;&nbsp; )<br>
+      return m[|s₁|][|s₂|]
+    </div>
+
+    <h4>Using Edit Distance for Spelling Correction</h4>
+    <p>Given a query term, enumerate all character sequences within a preset edit distance (e.g., 2), intersect with the valid dictionary, and suggest the most frequent matches.</p>
+    <p><strong>Alternative:</strong> Run the query and if few results are returned, try spelling-corrected versions.</p>
+
+    <h4>3.3.2 n-gram Overlap for Spelling Correction</h4>
+    <p>Break both the query and dictionary terms into n-grams (usually bigrams). Use the bigram index to retrieve all dictionary terms sharing bigrams with the query. Threshold by number of overlapping bigrams.</p>
+    <div class="key-point">
+      <strong>Example:</strong> Query "lord" → bigrams: lo, or, rd. Retrieve all dictionary terms with ≥2 matching bigrams. Post-score by Jaccard or overlap coefficient.
+    </div>
+
+    <h4>Context-Sensitive Spelling Correction</h4>
+    <p>For phrase queries: if "flew form Heathrow" returns no results, generate alternative spellings for each word and try all combinations. Use <strong>hit-based correction</strong>: suggest the alternative with the most document matches.</p>
+  </div>
+
+  <div class="section">
+    <h3>3.4 Phonetic Correction (Soundex)</h3>
+    <p>Soundex groups phonetically similar words (especially names) under the same code. Invented in 1918 for the U.S. census.</p>
+
+    <h4>Soundex Algorithm</h4>
+    <ol>
+      <li>Retain the first letter of the word.</li>
+      <li>Change all A, E, I, O, U, H, W, Y to '0' (zero).</li>
+      <li>Replace remaining letters with digits:
+        <ul>
+          <li>B, F, P, V → 1</li>
+          <li>C, G, J, K, Q, S, X, Z → 2</li>
+          <li>D, T → 3</li>
+          <li>L → 4</li>
+          <li>M, N → 5</li>
+          <li>R → 6</li>
+        </ul>
+      </li>
+      <li>Remove all pairs of consecutive identical digits.</li>
+      <li>Remove all zeros.</li>
+      <li>Pad with trailing zeros; return first 4 characters (letter + 3 digits).</li>
+    </ol>
+    <p><strong>Example:</strong> Herman → H655. Mary → M600. Nira → N600 (same code → phonetically equivalent).</p>
+    <div class="key-point">
+      <strong>Limitation:</strong> Soundex is provided by most databases (Oracle, Microsoft) but performs poorly for IR compared to specialized phonetic algorithms (Zobel & Dart, 1996). It fails for Chebyshev/Tchebycheff (different codes despite similar pronunciation).
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Be ready to compute Soundex codes from scratch. Also understand when to use each wildcard technique (Permuterm vs. k-gram) and the trade-offs.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 4                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="chapter" id="ch4">
+  <div class="chapter-label">Chapter 4 (Sections 4.1–4.4)</div>
+  <h2>Index Construction</h2>
+
+  <div class="section">
+    <h3>4.1 Hardware Basics</h3>
+    <p>Many design decisions in IR are driven by hardware characteristics.</p>
+
+    <table>
+      <tr><th>Parameter</th><th>Value (circa 2007)</th></tr>
+      <tr><td>Average disk seek time (s)</td><td>5 ms = 5 × 10⁻³ s</td></tr>
+      <tr><td>Transfer time per byte (b)</td><td>0.02 µs = 2 × 10⁻⁸ s</td></tr>
+      <tr><td>Processor clock rate</td><td>10⁹ s⁻¹</td></tr>
+      <tr><td>Low-level operation (p)</td><td>0.01 µs = 10⁻⁸ s</td></tr>
+      <tr><td>Main memory</td><td>Several GB</td></tr>
+      <tr><td>Disk space</td><td>1 TB or more</td></tr>
+    </table>
+
+    <h4>Key Hardware Principles</h4>
+    <ul>
+      <li><strong>Memory >> Disk speed:</strong> Access to data in memory is orders of magnitude faster than disk.</li>
+      <li><strong>No transfer during seeks:</strong> While the disk head is being positioned, no data is transferred. Minimize seeks by reading large contiguous chunks.</li>
+      <li><strong>Block-based I/O:</strong> Disk reads/writes are in blocks (8 KB–256 KB). Use this to your advantage.</li>
+      <li><strong>Fault tolerance:</strong> Using many cheap commodity machines (distributed) is far cheaper than one fault-tolerant machine.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>4.2 Blocked Sort-Based Indexing (BSBI)</h3>
+    <p>Used when the entire collection does not fit in memory. Segments the collection into fixed-size blocks, sorts each in memory, and then merges.</p>
+
+    <h4>BSBI Algorithm</h4>
+    <div class="algo">
+      <div class="algo-title">BSBINDEXCONSTRUCTION()</div>
+      n ← 0<br>
+      while (all documents have not been processed):<br>
+      &nbsp; n ← n + 1<br>
+      &nbsp; block ← PARSENEXTBLOCK()<br>
+      &nbsp; BSBI-INVERT(block)    // sort termID-docID pairs, build index<br>
+      &nbsp; WRITEBLOCKTODISK(block, fₙ)<br>
+      MERGEBLOCKS(f₁, …, fₙ; f_merged)
+    </div>
+
+    <h4>Steps</h4>
+    <ol>
+      <li><strong>Segment:</strong> Divide collection into equal-size blocks (that fit in memory).</li>
+      <li><strong>Sort:</strong> For each block, sort termID–docID pairs in memory.</li>
+      <li><strong>Write:</strong> Store sorted intermediate results on disk.</li>
+      <li><strong>Merge:</strong> Merge all intermediate results into the final index.</li>
+    </ol>
+
+    <div class="key-point">
+      <strong>Time complexity:</strong> Θ(T log T) where T is the total number of termID–docID pairs. The dominant cost is sorting. The actual bottleneck is usually parsing (PARSENEXTBLOCK) and final merge (MERGEBLOCKS).
+    </div>
+
+    <h4>Merging in BSBI</h4>
+    <p>Two blocks are loaded into memory, merged (like merge-sort's merge step), and written back to disk. For n blocks, this is done iteratively or in a multi-way merge.</p>
+  </div>
+
+  <div class="section">
+    <h3>4.3 Single-Pass In-Memory Indexing (SPIMI)</h3>
+    <p>SPIMI avoids the need for a global termID mapping by generating separate dictionaries for each block.</p>
+
+    <h4>Two Key Ideas</h4>
+    <ul>
+      <li><strong>Key idea 1:</strong> Generate a separate dictionary for each block — no need to maintain a term↔termID mapping across blocks.</li>
+      <li><strong>Key idea 2:</strong> Don't sort. Accumulate postings directly in postings lists as they occur (using a hash map for the dictionary).</li>
+    </ul>
+
+    <div class="algo">
+      <div class="algo-title">SPIMI-INVERT(token_stream)</div>
+      output_file = NEWFILE()<br>
+      dictionary = NEWHASH()<br>
+      while (free memory available):<br>
+      &nbsp; token ← next(token_stream)<br>
+      &nbsp; if term(token) ∉ dictionary:<br>
+      &nbsp;&nbsp; postings_list = ADDTODICTIONARY(dictionary, term(token))<br>
+      &nbsp; else:<br>
+      &nbsp;&nbsp; postings_list = GETPOSTINGSLIST(dictionary, term(token))<br>
+      &nbsp; if full(postings_list):<br>
+      &nbsp;&nbsp; postings_list = DOUBLEPOSTINGSLIST(dictionary, term(token))<br>
+      &nbsp; ADDTOPOSTINGSLIST(postings_list, docID(token))<br>
+      sorted_terms = SORTTERMS(dictionary)<br>
+      WRITEBLOCKTODISK(sorted_terms, dictionary, output_file)<br>
+      return output_file
+    </div>
+
+    <h4>BSBI vs. SPIMI Comparison</h4>
+    <table>
+      <tr><th>Aspect</th><th>BSBI</th><th>SPIMI</th></tr>
+      <tr><td>Sorting</td><td>Required (sorts termID-docID pairs)</td><td>Not required (directly appends to postings)</td></tr>
+      <tr><td>Memory use</td><td>Must store termIDs in postings</td><td>No termIDs in postings (saved via dictionary pointer)</td></tr>
+      <tr><td>Block size</td><td>Smaller (limited by sort)</td><td>Larger (no sort overhead)</td></tr>
+      <tr><td>Speed</td><td>Slower (sorting cost)</td><td>Faster (no sort)</td></tr>
+      <tr><td>Global term mapping</td><td>Required</td><td>Not required</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>4.4 Distributed Indexing (MapReduce)</h3>
+    <p>Web-scale search engines cannot build an index on a single machine. Distributed indexing is the solution.</p>
+
+    <h4>Architecture</h4>
+    <ul>
+      <li><strong>Master machine:</strong> Directs the indexing job; considered "safe".</li>
+      <li><strong>Parsers:</strong> Assigned document splits by master; emit (term, docID) pairs; partition into j segment files by term.</li>
+      <li><strong>Inverters:</strong> Collect all (term, docID) pairs for one term-partition; sort and write to postings lists.</li>
+    </ul>
+
+    <h4>MapReduce Framework</h4>
+    <table>
+      <tr><th>Phase</th><th>Description</th></tr>
+      <tr><td><strong>Map</strong></td><td>input (web collection) → list(termID, docID). Each parser processes documents and emits (term, doc) pairs.</td></tr>
+      <tr><td><strong>Reduce</strong></td><td>(termID₁, list(docID)), (termID₂, list(docID)), … → postings lists. Inverters sort and write final postings.</td></tr>
+    </table>
+
+    <div class="callout">
+      <strong>Scale:</strong> Google circa 2007: ~1 million servers, 3 million processors/cores (Gartner estimate). Data centers distributed globally. Uses commodity machines instead of expensive fault-tolerant hardware. Original MapReduce publication: Dean and Ghemawat (2004).
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>4.5 Dynamic Indexing</h3>
+    <p>Real collections are not static — documents arrive, are deleted, and modified over time.</p>
+
+    <h4>Simple Approach (Auxiliary Index)</h4>
+    <ul>
+      <li>Maintain a large <strong>main index</strong> on disk.</li>
+      <li>New documents go into a small <strong>auxiliary index</strong> in memory.</li>
+      <li>Search across both and merge results.</li>
+      <li>For deletions: use an <strong>invalidation bit-vector</strong>; filter output by this vector.</li>
+      <li>Periodically re-index everything into one main index.</li>
+    </ul>
+
+    <h4>Google Dance</h4>
+    <p>Search engines do incremental indexing (auxiliary) continuously and periodically do full background re-indexing ("Google Dance"). This keeps the index fresh while ensuring correctness.</p>
+
+    <h4>Cluster vs. Grid vs. Cloud Computing</h4>
+    <table>
+      <tr><th>Property</th><th>Cluster</th><th>Grid</th><th>Cloud</th></tr>
+      <tr><td>Basic Idea</td><td>Aggregation of resources</td><td>Segregation of resources</td><td>Consolidation of resources</td></tr>
+      <tr><td>Homogeneity</td><td>Homogeneous</td><td>Heterogeneous</td><td>Heterogeneous</td></tr>
+      <tr><td>OS Restriction</td><td>All nodes same OS</td><td>No restriction</td><td>No restriction</td></tr>
+      <tr><td>Location</td><td>Physically same location</td><td>Distributed globally</td><td>Location doesn't matter</td></tr>
+      <tr><td>Virtualization</td><td>None</td><td>None</td><td>Key feature</td></tr>
+      <tr><td>Security</td><td>High</td><td>High</td><td>Lower than both</td></tr>
+    </table>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Know the BSBI and SPIMI algorithms well enough to trace through them. Understand time complexity of BSBI = Θ(T log T). Key SPIMI advantage: no sorting required, larger blocks. For MapReduce: know the map phase emits (term, doc) and reduce phase produces (term, postings_list).
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 5                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="chapter" id="ch5">
+  <div class="chapter-label">Chapter 5 (Sections 5.1–5.3)</div>
+  <h2>Index Compression</h2>
+
+  <div class="section">
+    <h3>Why Compression?</h3>
+    <ul>
+      <li><strong>Less disk space</strong> → saves money.</li>
+      <li><strong>More in memory cache</strong> → faster retrieval (fewer disk seeks).</li>
+      <li><strong>Faster disk-to-memory transfer:</strong> Reading compressed data + decompressing is often faster than reading uncompressed data. Decompression algorithms are very fast on modern hardware.</li>
+    </ul>
+    <div class="key-point">
+      <strong>Key insight:</strong> In most cases, the retrieval system runs <em>faster</em> on compressed postings lists than on uncompressed ones, because the time savings from smaller I/O outweigh the decompression cost.
+    </div>
+    <p><strong>Lossless vs. Lossy compression:</strong> The techniques in this chapter are lossless. Stemming, stop-word elimination, and case folding are forms of lossy compression.</p>
+  </div>
+
+  <div class="section">
+    <h3>5.1 Statistical Properties of Terms</h3>
+
+    <h4>5.1.1 Heaps' Law — Vocabulary Size</h4>
+    <div class="def-box">
+      <div class="label">Heaps' Law</div>
+      <p>Vocabulary size M as a function of collection size T (number of tokens):</p>
+    </div>
+    <div class="formula">M = k · T^b
+
+Typical values: 30 ≤ k ≤ 100, b ≈ 0.5
+
+For Reuters-RCV1 (best fit): k = 44, b = 0.49
+→ M = 44 × T^0.49</div>
+
+    <p><strong>Interpretation:</strong></p>
+    <ul>
+      <li>Dictionary size continues to grow with more documents — no maximum vocabulary is reached.</li>
+      <li>The dictionary is quite large for large collections.</li>
+      <li>Factors that increase M: including numbers, spelling errors.</li>
+      <li>Factors that decrease M: case folding, stemming.</li>
+    </ul>
+
+    <div class="key-point">
+      <strong>Example:</strong> For RCV1, first 1,000,020 tokens → Heaps predicts 38,323 terms. Actual: 38,365. Very close!
+    </div>
+
+    <h4>5.1.2 Zipf's Law — Term Distribution</h4>
+    <div class="def-box">
+      <div class="label">Zipf's Law</div>
+      <p>The collection frequency cf_i of the i-th most common term is proportional to 1/i:</p>
+    </div>
+    <div class="formula">cf_i ∝ 1/i   →   cf_i = c/i
+
+Equivalently: log(cf_i) = log(c) − log(i)
+
+This is a power law with exponent k = −1.
+Rank × Frequency ≈ constant</div>
+
+    <p><strong>Consequences:</strong> If the most frequent term ("the") appears cf₁ times, then the 2nd most frequent ("of") appears cf₁/2 times, the 3rd ("and") appears cf₁/3 times, etc.</p>
+    <p><strong>Practical implication for compression:</strong> Most terms are rare (long tail). Frequent terms have very small gaps in their postings lists; rare terms have large gaps. This non-uniform distribution motivates variable-length encoding.</p>
+
+    <table>
+      <tr><th>Language</th><th>Top term</th><th>Approx. count</th></tr>
+      <tr><td>English</td><td>the</td><td>61,847</td></tr>
+      <tr><td>German</td><td>der</td><td>7,377,879</td></tr>
+      <tr><td>Spanish</td><td>que</td><td>32,894</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>5.2 Dictionary Compression</h3>
+
+    <h4>Reuters-RCV1 Baseline</h4>
+    <p>400,000 terms. Naïve fixed-width storage: 20 bytes/term + 4 bytes/freq + 4 bytes/postings pointer = 28 bytes × 400,000 = <strong>11.2 MB</strong>.</p>
+    <p>Problems: average English term is ~8 characters, so 20-byte slots waste space. Terms over 20 chars can't be stored.</p>
+
+    <h4>5.2.1 Dictionary as a String</h4>
+    <p>Store all terms as one long concatenated string. Replace fixed-width term storage with variable-length term storage + a term pointer.</p>
+    <ul>
+      <li>Total string length = 400,000 × 8 bytes = 3.2 MB.</li>
+      <li>Pointers need to resolve 3.2M positions → log₂(3.2M) ≈ 22 bits = <strong>3 bytes</strong> per pointer.</li>
+      <li>New cost: 4 (freq) + 4 (postings ptr) + 3 (term ptr) + 8 (avg term) = 19 bytes/term → 400,000 × 19 = <strong>7.6 MB</strong>.</li>
+    </ul>
+
+    <h4>5.2.2 Blocked Storage</h4>
+    <p>Group terms into blocks of size k. Store a term pointer only for the first term of each block. Prepend each term with a 1-byte length indicator.</p>
+    <ul>
+      <li>For k=4: save (k−1)×3 = 9 bytes per block in pointers, add k=4 bytes for lengths. Net saving: 5 bytes per 4-term block.</li>
+      <li>Total savings: 400,000 × (1/4) × 5 = 0.5 MB → down to <strong>7.1 MB</strong>.</li>
+      <li>Trade-off: Binary search finds the block; then linear scan within the block. Slower lookup for larger k.</li>
+    </ul>
+
+    <h4>Front Coding</h4>
+    <p>Exploit common prefixes in alphabetically sorted terms. Mark end of common prefix with *, replace prefix in subsequent terms.</p>
+    <div class="formula">8automat*a → 8 automat a (automate)
+8automate → 1 e
+9automatic → 2 ic
+10automation → 3 ion</div>
+    <p>Front coding saves about 1.2 MB more for Reuters-RCV1 → <strong>5.9 MB</strong>.</p>
+
+    <h4>Compression Summary for Dictionary</h4>
+    <table>
+      <tr><th>Method</th><th>Size (MB)</th></tr>
+      <tr><td>Fixed-width (20 bytes/term)</td><td>11.2</td></tr>
+      <tr><td>Dictionary as string (term pointers)</td><td>7.6</td></tr>
+      <tr><td>+ Blocking with k=4</td><td>7.1</td></tr>
+      <tr><td>+ Blocking with front coding</td><td>5.9</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>5.3 Postings File Compression</h3>
+    <p>Postings file is much larger than dictionary. Reuters-RCV1: 100M postings, 20 bits each = <strong>250 MB</strong> uncompressed (or 400 MB as 32-bit integers).</p>
+
+    <h4>Gap Encoding (d-gaps)</h4>
+    <p>Instead of storing absolute docIDs, store the differences (gaps) between consecutive docIDs. Frequent terms have small gaps (mostly 1); rare terms have gaps similar in size to the docIDs themselves.</p>
+    <div class="formula">Example for "the": docIDs: 283042, 283043, 283044, 283045...
+                gaps:    283042,      1,      1,      1...
+
+Example for "arachnocentric": gaps are as large as docIDs (~20 bits)</div>
+    <p>Goal: encode small gaps with fewer bits. Use variable-length encoding.</p>
+
+    <h4>5.3.1 Variable Byte (VB) Encoding</h4>
+    <p>Encode gaps using an integral number of bytes. Each byte has:</p>
+    <ul>
+      <li><strong>7 payload bits</strong> (from the low-order end).</li>
+      <li><strong>1 continuation bit</strong> (high-order): 1 = last byte of this number, 0 = more bytes follow.</li>
+    </ul>
+    <div class="formula">VB encoding examples:
+Gap = 5    → 1000 0101  (single byte, continuation=1, value=5)
+Gap = 824  → 0000 0110  1011 1000  (two bytes: 6 × 128 + 56 = 824)
+Gap = 214577 → three bytes</div>
+
+    <div class="algo">
+      <div class="algo-title">VBEncodeNumber(n)</div>
+      bytes ← []<br>
+      while true:<br>
+      &nbsp; Prepend(bytes, n mod 128)   // add 7-bit chunk<br>
+      &nbsp; if n &lt; 128: break<br>
+      &nbsp; n ← n div 128<br>
+      bytes[last] += 128                  // set continuation bit on last byte<br>
+      return bytes
+    </div>
+
+    <div class="key-point">
+      <strong>Result for Reuters-RCV1:</strong> VB encoding → <strong>116 MB</strong> (from 250 MB). >50% reduction. Simple to implement and fast to decompress.
+    </div>
+
+    <h4>5.3.2 Gamma (γ) Encoding</h4>
+    <p>A bit-level code that is within a factor of 2 of optimal for <em>any</em> probability distribution. Encodes a gap G as: <code>length</code> (in unary) + <code>offset</code> (binary without leading 1).</p>
+
+    <div class="formula">For gap G:
+  offset = G in binary with leading 1 removed
+  length = length of offset, encoded in unary (n 1s followed by 0)
+
+γ code(G) = length + offset
+
+Example: G = 13 = 1101₂
+  offset = 101 (removed leading 1)
+  length = 3 bits → unary = 1110
+  γ code = 1110 101</div>
+
+    <table>
+      <tr><th>Number</th><th>Binary</th><th>Unary length</th><th>Offset</th><th>γ code</th></tr>
+      <tr><td>1</td><td>1</td><td>0</td><td></td><td>0</td></tr>
+      <tr><td>2</td><td>10</td><td>10</td><td>0</td><td>10,0</td></tr>
+      <tr><td>3</td><td>11</td><td>10</td><td>1</td><td>10,1</td></tr>
+      <tr><td>4</td><td>100</td><td>110</td><td>00</td><td>110,00</td></tr>
+      <tr><td>9</td><td>1001</td><td>1110</td><td>001</td><td>1110,001</td></tr>
+      <tr><td>13</td><td>1101</td><td>1110</td><td>101</td><td>1110,101</td></tr>
+    </table>
+
+    <p><strong>Code length:</strong> 2⌊log₂G⌋ + 1 bits. Always odd length.</p>
+    <p><strong>Properties:</strong></p>
+    <ul>
+      <li><strong>Universal:</strong> Within a factor of 3 of optimal for any distribution (factor ≈ 2 for large entropy). No knowledge of term distribution needed.</li>
+      <li><strong>Prefix-free:</strong> Unique decoding without delimiters.</li>
+      <li><strong>Parameter-free:</strong> No model fitting required.</li>
+    </ul>
+
+    <div class="key-point">
+      <strong>Result for Reuters-RCV1:</strong> γ encoding → <strong>101 MB</strong> (from 250 MB). ~15% better than VB encoding, but slower to decode due to bit-manipulation overhead.
+    </div>
+
+    <h4>VB vs. γ Encoding Trade-off</h4>
+    <table>
+      <tr><th>Property</th><th>Variable Byte</th><th>γ Encoding</th></tr>
+      <tr><td>Compression</td><td>Good (116 MB)</td><td>Better (101 MB)</td></tr>
+      <tr><td>Decode speed</td><td>Fast (byte-aligned)</td><td>Slower (bit-level ops)</td></tr>
+      <tr><td>Implementation</td><td>Simple</td><td>More complex</td></tr>
+      <tr><td>Best for</td><td>Systems needing speed</td><td>Systems needing space</td></tr>
+    </table>
+
+    <h4>Full Compression Summary for Reuters-RCV1</h4>
+    <table>
+      <tr><th>Data Structure</th><th>Size (MB)</th></tr>
+      <tr><td>Collection (text + XML markup)</td><td>3,600</td></tr>
+      <tr><td>Collection (text only)</td><td>960</td></tr>
+      <tr><td>Term incidence matrix</td><td>40,000</td></tr>
+      <tr><td>Postings, uncompressed (32-bit)</td><td>400</td></tr>
+      <tr><td>Postings, uncompressed (20-bit)</td><td>250</td></tr>
+      <tr><td>Postings, Variable Byte encoded</td><td>116</td></tr>
+      <tr><td>Postings, γ encoded</td><td>101</td></tr>
+      <tr><td>Dictionary, fixed-width</td><td>11.2</td></tr>
+      <tr><td>Dictionary, string + blocking + front coding</td><td>5.9</td></tr>
+    </table>
+
+    <div class="key-point">
+      <strong>Final compression ratio:</strong> Best compressed index (101 + 5.9) / 3600 ≈ <strong>3% of collection size</strong>; about 10–15% of text-only size. Index compression is only 4% of total collection size.
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Be ready to: (1) State Heaps' law and Zipf's law formulas and their implications. (2) Compute dictionary compression sizes at each stage. (3) Encode/decode VB codes: every gap that fits in 7 bits → 1 byte (1xxxxxxx); 8–14 bits → 2 bytes (0xxxxxxx 1xxxxxxx). (4) Encode/decode γ codes from scratch. (5) Explain the trade-off between VB and γ encoding.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CHAPTER 6                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="chapter" id="ch6">
+  <div class="chapter-label">Chapter 6 (Sections 6.2–6.3)</div>
+  <h2>Scoring, Term Weighting, and the Vector Space Model</h2>
+
+  <div class="section">
+    <h3>Why Move Beyond Boolean?</h3>
+    <p>Boolean retrieval returns a set of documents that either match or don't. For large collections, the matching set is often too large to be useful. We need to <strong>rank</strong> matching documents by how well they match the query.</p>
+    <p>This requires assigning a numerical <strong>score</strong> to each (query, document) pair — the score reflects relevance or match quality.</p>
+  </div>
+
+  <div class="section">
+    <h3>6.2 Term Frequency and Weighting</h3>
+
+    <h4>Bag-of-Words Model</h4>
+    <p>In the vector space model, we ignore the order of terms and treat a document as a "bag" of words. A document is represented by the (weighted) frequencies of each term it contains.</p>
+
+    <h4>Term Frequency (tf)</h4>
+    <div class="def-box">
+      <div class="label">Definition</div>
+      <p><strong>tf_{t,d}</strong> = the number of times term t occurs in document d.</p>
+    </div>
+    <p>Raw tf alone is problematic: a term appearing 10 times in a document is not 10× more relevant than one appearing once. But it should count for more than once. Standard fix: use the <strong>log-frequency weight</strong>.</p>
+    <div class="formula">Log-frequency weight:
+  w_{t,d} = 1 + log₁₀(tf_{t,d})   if tf_{t,d} > 0
+  w_{t,d} = 0                       if tf_{t,d} = 0</div>
+
+    <h4>Document Frequency (df) and Inverse Document Frequency (idf)</h4>
+    <div class="def-box">
+      <div class="label">Definition</div>
+      <p><strong>df_t</strong> = the number of documents in which term t appears.
+      <strong>idf_t</strong> = log₁₀(N / df_t), where N is the total number of documents.</p>
+    </div>
+    <p><strong>Intuition:</strong> Rare terms are more informative (discriminative) than frequent terms. A term that appears in every document tells us nothing about which document is relevant. idf gives high weight to rare terms and low weight to frequent ones.</p>
+    <div class="formula">idf_t = log₁₀(N / df_t)
+
+Examples (N = 1,000,000 docs):
+  "the" → df ≈ 1,000,000 → idf = log₁₀(1) = 0       (tells us nothing)
+  "car" → df ≈ 10,000   → idf = log₁₀(100) = 2       (moderately informative)
+  "gnat" → df ≈ 100     → idf = log₁₀(10,000) = 4     (very informative)</div>
+
+    <h4>tf-idf Weight</h4>
+    <p>The <strong>tf-idf weight</strong> of term t in document d is the product of its log-tf and idf:</p>
+    <div class="formula">tf-idf_{t,d} = (1 + log₁₀(tf_{t,d})) × log₁₀(N / df_t)
+
+This is the most widely used weighting scheme in IR.
+High tf-idf means: term occurs frequently in this document (high tf)
+                   AND rarely in the collection (high idf).</div>
+
+    <h4>Scoring a Query</h4>
+    <p>For a free-text query q (treated as a set of terms), the score of document d for query q is:</p>
+    <div class="formula">Score(q, d) = Σ_{t ∈ q ∩ d} tf-idf_{t,d}</div>
+    <p>Only terms appearing in both the query and the document contribute. Terms with zero tf or zero idf contribute nothing.</p>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      Watch out: idf of a term appearing in all N documents = log(N/N) = log(1) = 0. Such terms get zero weight. This makes intuitive sense — if every document contains a term, it doesn't help distinguish between them.
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>6.3 The Vector Space Model for Scoring</h3>
+
+    <h4>Document as Vector</h4>
+    <p>Each document d is represented as a vector in a |V|-dimensional space, where V is the vocabulary. The weight of term t in document d is its tf-idf weight:</p>
+    <div class="formula">d = (w_{t₁,d}, w_{t₂,d}, …, w_{t|V|,d})</div>
+    <p>Most dimensions are 0 (terms not in document). The vector space is extremely high-dimensional and sparse.</p>
+
+    <h4>Query as Vector</h4>
+    <p>The query q is also represented as a vector in the same space. For a query term t, its weight can be computed similarly (e.g., tf in the query × idf of t).</p>
+
+    <h4>Cosine Similarity</h4>
+    <p>To score a document d against query q, we measure the <strong>cosine of the angle</strong> between their vectors. This normalizes for document length.</p>
+    <div class="formula">cos(q, d) = (q · d) / (|q| × |d|)
+             = Σ_{t} (w_{t,q} × w_{t,d}) / (sqrt(Σ_t w²_{t,q}) × sqrt(Σ_t w²_{t,d}))</div>
+
+    <div class="key-point">
+      <strong>Why cosine?</strong> Two identical documents will have cosine = 1 regardless of length. A document that is twice as long but contains the same terms in similar proportions should score just as high — cosine normalization handles this. Range: [0, 1] for non-negative weights.
+    </div>
+
+    <h4>Unit Vectors (Length Normalization)</h4>
+    <p>Computing cosine is equivalent to dot product after normalizing both vectors to unit length:</p>
+    <div class="formula">d̂ = d / |d|   (normalize to unit vector)
+
+cosine similarity = q̂ · d̂ = Σ_t (q̂_t × d̂_t)</div>
+
+    <h4>Worked Example</h4>
+    <p>Consider 3 documents and query "car insurance auto insurance" (N=3):</p>
+    <table>
+      <tr><th>Term</th><th>df</th><th>idf</th><th>tf(d1)</th><th>tf-idf(d1)</th><th>tf(d2)</th><th>tf-idf(d2)</th></tr>
+      <tr><td>car</td><td>2</td><td>0.18</td><td>27</td><td>2.5×0.18=0.45</td><td>4</td><td>0.71×0.18=0.13</td></tr>
+      <tr><td>auto</td><td>1</td><td>0.48</td><td>3</td><td>0.56×0.48=0.27</td><td>33</td><td>2.53×0.48=1.21</td></tr>
+      <tr><td>insurance</td><td>3</td><td>0</td><td>0</td><td>0</td><td>33</td><td>0</td></tr>
+    </table>
+    <p>(After normalization and cosine computation, rank documents by score.)</p>
+
+    <h4>The SMART Notation for tf-idf Variants</h4>
+    <p>Systems use different combinations of tf and idf weighting. The SMART notation encodes these as three components: tf-idf-normalization.</p>
+    <table>
+      <tr><th>Component</th><th>Symbol</th><th>Formula</th></tr>
+      <tr><td rowspan="4">Term Frequency</td><td>n (natural)</td><td>tf_{t,d}</td></tr>
+      <tr><td>l (log)</td><td>1 + log(tf_{t,d})</td></tr>
+      <tr><td>a (augmented)</td><td>0.5 + 0.5 × tf / max_tf</td></tr>
+      <tr><td>b (boolean)</td><td>1 if tf > 0, else 0</td></tr>
+      <tr><td rowspan="3">Doc Frequency</td><td>n (none)</td><td>1</td></tr>
+      <tr><td>t (idf)</td><td>log(N/df_t)</td></tr>
+      <tr><td>p (prob idf)</td><td>max(0, log((N-df)/df))</td></tr>
+      <tr><td rowspan="3">Normalization</td><td>n (none)</td><td>1</td></tr>
+      <tr><td>c (cosine)</td><td>1 / sqrt(Σ w²)</td></tr>
+      <tr><td>u (pivoted unique)</td><td>1 / u</td></tr>
+    </table>
+    <p>A common scheme: <strong>lnc.ltc</strong> = log-tf, no idf, cosine norm for docs; log-tf, idf, cosine norm for queries.</p>
+
+    <div class="exam-tip">
+      <div class="et-label">⚑ Exam Tip</div>
+      The core VSM exam skills are: (1) Compute tf-idf weights from raw tf and df values. (2) Represent documents as tf-idf vectors. (3) Compute cosine similarity between a query vector and a document vector, step by step. (4) Explain why length normalization matters. (5) Know why idf of a term in all documents = 0.
+    </div>
+
+    <h4>Advantages of VSM</h4>
+    <ul>
+      <li>Partial matching — documents don't need to contain all query terms.</li>
+      <li>Natural ranking — documents with more/rarer query terms score higher.</li>
+      <li>Length normalization — longer documents don't automatically score higher.</li>
+      <li>Theoretically grounded and empirically effective.</li>
+    </ul>
+
+    <h4>Limitations of VSM</h4>
+    <ul>
+      <li>Independence assumption: treats terms as independent (ignores synonymy, polysemy).</li>
+      <li>Bag-of-words: ignores word order and proximity.</li>
+      <li>The "right" weighting scheme is still an open empirical question.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>Quick Reference: All Key Formulas</h3>
+    <div class="formula">Heaps' Law:         M = k · T^b         (k≈44, b≈0.49 for RCV1)
+Zipf's Law:          cf_i = c / i         (rank × freq ≈ const)
+Log tf weight:       w = 1 + log₁₀(tf)   (or 0 if tf = 0)
+idf:                 idf_t = log₁₀(N / df_t)
+tf-idf:              w_{t,d} = tf_weight_{t,d} × idf_t
+Cosine similarity:   cos(q,d) = (q·d) / (|q|×|d|)
+VB code length:      1 byte per 7 bits of gap (continuation bit in MSB)
+γ code length:       2⌊log₂G⌋ + 1 bits
+Skip pointer rule:   Place √L evenly-spaced skips for postings of length L
+BSBI complexity:     Θ(T log T)</div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer style="background:var(--sidebar);color:#bba882;text-align:center;padding:1.5rem;font-size:.8rem;letter-spacing:.08em;">
+  CS4051 Information Retrieval · Exam Notes · Based on Manning, Raghavan &amp; Schütze (2008) · Instructor: Muhammad Rafi
+</footer>
+
+</body>
+</html>

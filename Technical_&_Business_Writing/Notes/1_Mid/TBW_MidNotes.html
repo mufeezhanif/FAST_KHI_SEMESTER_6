@@ -1,0 +1,2760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TBW Mid Notes — Fall 2025</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0c12;
+      --surface: #111421;
+      --surface2: #161a28;
+      --border: #1e2436;
+      --accent: #4f8ef7;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --accent4: #fb923c;
+      --accent5: #f472b6;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --subtle: #94a3b8;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ─── NAV SIDEBAR ─── */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 260px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .sidebar-logo span {
+      display: block;
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .nav-section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 1.2rem;
+      margin-bottom: 0.3rem;
+      padding-left: 0.5rem;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 0.45rem 0.75rem;
+      border-radius: 8px;
+      color: var(--subtle);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 400;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--border);
+      border-left-color: var(--accent);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      background: rgba(79, 142, 247, 0.1);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-sub {
+      padding-left: 1.2rem;
+      font-size: 0.77rem;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .main {
+      margin-left: 260px;
+      padding: 3rem 3.5rem;
+      max-width: 1100px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 4rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(79, 142, 247, 0.1);
+      border: 1px solid rgba(79, 142, 247, 0.25);
+      border-radius: 999px;
+      padding: 0.3rem 1rem;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before {
+      content: '●';
+      font-size: 0.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.3
+      }
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.2rem;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .hero-desc {
+      color: var(--subtle);
+      font-size: 0.95rem;
+      max-width: 580px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-blue {
+      background: rgba(79, 142, 247, 0.15);
+      color: #93c5fd;
+      border: 1px solid rgba(79, 142, 247, 0.3);
+    }
+
+    .tag-purple {
+      background: rgba(167, 139, 250, 0.15);
+      color: #c4b5fd;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+    }
+
+    .tag-green {
+      background: rgba(52, 211, 153, 0.15);
+      color: #6ee7b7;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .tag-orange {
+      background: rgba(251, 146, 60, 0.15);
+      color: #fdba74;
+      border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    /* ─── SECTIONS ─── */
+    .unit {
+      margin-bottom: 5rem;
+      scroll-margin-top: 2rem;
+    }
+
+    .unit-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .unit-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .n1 {
+      background: rgba(79, 142, 247, 0.2);
+      color: var(--accent);
+      border: 1px solid rgba(79, 142, 247, 0.3);
+    }
+
+    .n2 {
+      background: rgba(167, 139, 250, 0.2);
+      color: var(--accent2);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+    }
+
+    .n3 {
+      background: rgba(52, 211, 153, 0.2);
+      color: var(--accent3);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .n4 {
+      background: rgba(251, 146, 60, 0.2);
+      color: var(--accent4);
+      border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .unit-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--text);
+    }
+
+    /* ─── SUBSECTION ─── */
+    .subsection {
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 2rem;
+    }
+
+    h3.sub-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    h3.sub-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.1rem;
+      border-radius: 2px;
+    }
+
+    .s1 h3.sub-title::before {
+      background: var(--accent);
+    }
+
+    .s2 h3.sub-title::before {
+      background: var(--accent2);
+    }
+
+    .s3 h3.sub-title::before {
+      background: var(--accent3);
+    }
+
+    .s4 h3.sub-title::before {
+      background: var(--accent4);
+    }
+
+    h4.sub-sub-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      margin-bottom: 0.9rem;
+      color: var(--subtle);
+    }
+
+    p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    /* ─── GRID ─── */
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* ─── HAMBURGER BUTTON ─── */
+    .hamburger {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 201;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      transition: background 0.2s;
+    }
+
+    .hamburger:hover {
+      background: var(--surface2);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ─── SIDEBAR OVERLAY ─── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .sidebar-overlay.visible {
+      opacity: 1;
+    }
+
+    /* ─── SIDEBAR SCROLLBAR ─── */
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 900px) {
+
+      .grid2,
+      .grid3 {
+        grid-template-columns: 1fr;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+        padding-top: 4rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .sidebar-overlay {
+        display: block;
+        pointer-events: none;
+      }
+
+      .sidebar-overlay.visible {
+        pointer-events: auto;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 200;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .compare {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── CALLOUT ─── */
+    .callout {
+      display: flex;
+      gap: 1rem;
+      padding: 1.2rem 1.4rem;
+      border-radius: 12px;
+      margin: 1.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .callout-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      line-height: 1.75;
+    }
+
+    .callout-blue {
+      background: rgba(79, 142, 247, 0.08);
+      border: 1px solid rgba(79, 142, 247, 0.2);
+    }
+
+    .callout-purple {
+      background: rgba(167, 139, 250, 0.08);
+      border: 1px solid rgba(167, 139, 250, 0.2);
+    }
+
+    .callout-green {
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .callout-orange {
+      background: rgba(251, 146, 60, 0.08);
+      border: 1px solid rgba(251, 146, 60, 0.2);
+    }
+
+    .callout-red {
+      background: rgba(248, 113, 113, 0.08);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+
+    .callout p {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .callout strong {
+      color: inherit;
+    }
+
+    /* ─── LIST ─── */
+    ul.styled,
+    ol.styled {
+      padding-left: 1.4rem;
+      color: var(--subtle);
+      margin-bottom: 1rem;
+    }
+
+    ul.styled li,
+    ol.styled li {
+      margin-bottom: 0.45rem;
+      font-size: 0.875rem;
+    }
+
+    ul.styled li strong,
+    ol.styled li strong {
+      color: var(--text);
+    }
+
+    /* ─── TABLE ─── */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.825rem;
+    }
+
+    thead tr {
+      background: var(--surface2);
+    }
+
+    thead th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      color: var(--subtle);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--surface2);
+    }
+
+    tbody td {
+      padding: 0.7rem 1rem;
+      color: var(--subtle);
+      vertical-align: top;
+    }
+
+    tbody td:first-child {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ─── CODE / EXAMPLE ─── */
+    .example-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent3);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin: 0.75rem 0 1.25rem;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--subtle);
+      line-height: 1.6;
+    }
+
+    .example-box .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent3);
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 0.4rem;
+    }
+
+    .example-box .bad {
+      color: #f87171;
+      text-decoration: line-through;
+    }
+
+    .example-box .good {
+      color: #4ade80;
+    }
+
+    /* ─── COMPARISON ─── */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .compare-col {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+    }
+
+    .compare-col .col-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .col-a .col-label {
+      color: var(--accent);
+    }
+
+    .col-b .col-label {
+      color: var(--accent4);
+    }
+
+    .compare-col ul {
+      padding-left: 1.1rem;
+    }
+
+    .compare-col ul li {
+      font-size: 0.82rem;
+      color: var(--subtle);
+      margin-bottom: 0.35rem;
+    }
+
+    /* ─── PILL BADGE ─── */
+    .pill {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .pill-blue {
+      background: rgba(79, 142, 247, 0.15);
+      color: #93c5fd;
+    }
+
+    .pill-green {
+      background: rgba(52, 211, 153, 0.15);
+      color: #6ee7b7;
+    }
+
+    .pill-purple {
+      background: rgba(167, 139, 250, 0.15);
+      color: #c4b5fd;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 2.5rem 0;
+    }
+
+    /* ─── PROGRESS-STYLE HIGHLIGHTS ─── */
+    .highlight-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .highlight-row:last-child {
+      border-bottom: none;
+    }
+
+    .highlight-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .highlight-row p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    /* ─── KEY TERM ─── */
+    .key-term {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem 1.1rem;
+      background: var(--surface);
+      border-left: 3px solid var(--accent2);
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .key-term .term {
+      font-weight: 700;
+      color: var(--accent2);
+      min-width: 130px;
+      flex-shrink: 0;
+    }
+
+    .key-term .def {
+      color: var(--subtle);
+    }
+
+    /* ─── STEP ─── */
+    .steps {
+      counter-reset: steps;
+    }
+
+    .step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      counter-increment: steps;
+    }
+
+    .step::before {
+      content: counter(steps);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+      font-weight: 600;
+    }
+
+    .step p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--subtle);
+    }
+
+    .step p strong {
+      color: var(--text);
+    }
+
+    /* ─── SCROLL PROGRESS ─── */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 999;
+      transition: width 0.1s;
+      width: 0%;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .unit {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .unit:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .unit:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .unit:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .unit:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .unit:nth-child(5) {
+      animation-delay: 0.15s;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 5rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="progress-bar"></div>
+
+  <!-- ─── HAMBURGER ─── -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ─── SIDEBAR ─── -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">TBW Notes<span>SS2007 · Fall 2025 · Mid Prep</span></div>
+
+    <div class="nav-section-label">Unit 1</div>
+    <a href="#genre" class="nav-link">Genre of Writing</a>
+    <a href="#types-writing" class="nav-link nav-sub">Types of Writing</a>
+    <a href="#technical-def" class="nav-link nav-sub">What is Technical Writing?</a>
+    <a href="#history" class="nav-link nav-sub">History</a>
+    <a href="#genres-tw" class="nav-link nav-sub">Genres of TW</a>
+    <a href="#differences" class="nav-link nav-sub">TW vs Other Writing</a>
+
+    <div class="nav-section-label">Unit 2</div>
+    <a href="#style" class="nav-link">Style of Technical Writing</a>
+    <a href="#language" class="nav-link nav-sub">Language & Formality</a>
+    <a href="#conciseness" class="nav-link nav-sub">Conciseness</a>
+    <a href="#clarity" class="nav-link nav-sub">Clarity</a>
+    <a href="#accuracy" class="nav-link nav-sub">Accuracy</a>
+    <a href="#organization" class="nav-link nav-sub">Organization</a>
+
+    <div class="nav-section-label">Unit 3</div>
+    <a href="#process" class="nav-link">Technical Writing Process</a>
+    <a href="#planning" class="nav-link nav-sub">Planning Phase</a>
+    <a href="#audience" class="nav-link nav-sub">Audience Analysis</a>
+    <a href="#purpose-types" class="nav-link nav-sub">6 Writer Purposes</a>
+
+    <div class="nav-section-label">Unit 4</div>
+    <a href="#synthesis" class="nav-link">Synthesis Writing</a>
+    <a href="#synthesis-types" class="nav-link nav-sub">Types of Synthesis</a>
+    <a href="#quoting" class="nav-link nav-sub">Integrating Evidence</a>
+    <a href="#signal-verbs" class="nav-link nav-sub">Signal Verbs</a>
+  </nav>
+
+  <!-- ─── MAIN ─── -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-badge">Mid Exam Preparation</div>
+      <h1>Technical &amp; Business Writing</h1>
+      <p class="hero-desc">Complete study notes for your mid exam — covering all four core topics with detailed
+        explanations, examples, comparisons, and key terms. No need to touch the slides.</p>
+      <div class="hero-tags">
+        <span class="tag tag-blue">Genre of Writing</span>
+        <span class="tag tag-purple">Style of TW</span>
+        <span class="tag tag-green">Writing Process</span>
+        <span class="tag tag-orange">Synthesis Writing</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       UNIT 1: GENRE OF WRITING
+  ════════════════════════════════════════════ -->
+    <section class="unit s1" id="genre">
+      <div class="unit-header">
+        <div class="unit-number n1">01</div>
+        <h2 class="unit-title">Genre of Writing</h2>
+      </div>
+
+      <!-- Writing overview -->
+      <div class="subsection" id="types-writing">
+        <h3 class="sub-title">Four Language Skills &amp; Writing</h3>
+
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Receptive Skills</div>
+            <p style="margin:0;font-size:0.85rem;">Listening and Reading — the person <em>receives</em> information from
+              an external source.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Productive Skills</div>
+            <p style="margin:0;font-size:0.85rem;">Speaking and Writing — the person <em>produces</em> the message
+              themselves.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <span class="callout-icon">💡</span>
+          <p><strong>Writing as a Productive Skill:</strong> A writer is the <em>originator</em> of the message. Unlike
+            copying or transcribing (non-productive), creative and technical writing requires the writer to generate,
+            structure, and communicate their own ideas.</p>
+        </div>
+
+        <h4 class="sub-sub-title">Why Writing Matters</h4>
+        <ul class="styled">
+          <li>Records history and preserves culture, religion, and ideology.</li>
+          <li>Guides and instructs others effectively.</li>
+          <li>Codifies language, making it permanent.</li>
+          <li>Carries immense power — written word is far more reliable than oral communication.</li>
+          <li>Is the most appropriate medium in most professional situations.</li>
+        </ul>
+      </div>
+
+      <!-- Genres -->
+      <div class="subsection">
+        <h3 class="sub-title">Main Genres of Writing</h3>
+        <div class="compare">
+          <div class="compare-col col-a">
+            <div class="col-label">Fiction</div>
+            <ul>
+              <li>Drama</li>
+              <li>Poetry</li>
+              <li>Novel / Novelette / Novella</li>
+              <li>Short Story</li>
+            </ul>
+          </div>
+          <div class="compare-col col-b">
+            <div class="col-label">Non-Fiction</div>
+            <ul>
+              <li>Essays</li>
+              <li>Reports</li>
+              <li>Research Papers</li>
+              <li>Memos, Articles, Editorials</li>
+              <li>Reviews, Letters</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Types of Writing -->
+      <div class="subsection">
+        <h3 class="sub-title">Five Types of Writing</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Examples</th>
+                <th>Key Trait</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Creative Writing</td>
+                <td>Poems, plays, stories</td>
+                <td>Connotative/expressive language, fictional characters, imagery, plots</td>
+              </tr>
+              <tr>
+                <td>Expressive Writing</td>
+                <td>Narratives, descriptions</td>
+                <td>Subjective, personal experience-based, connotative words</td>
+              </tr>
+              <tr>
+                <td>Expository Writing</td>
+                <td>Comparison, analysis, cause/effect, argument</td>
+                <td>Objective; uses both connotative and denotative words</td>
+              </tr>
+              <tr>
+                <td>Journalism</td>
+                <td>News stories, features, editorials</td>
+                <td>Objective, factual, short sentences, mostly denotative</td>
+              </tr>
+              <tr>
+                <td>Technical Writing</td>
+                <td>Memos, letters, reports, instructions, résumés, web pages</td>
+                <td>Objective, about products/services, short sentences, denotative words</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-orange">
+          <span class="callout-icon">📌</span>
+          <p><strong>Exam Tip:</strong> Know the shoe example! A technical spec describes the D40 Slammer with exact
+            measurements. A poem about the same shoe uses imagery and emotion. Both describe a shoe — but the genre
+            completely changes the language and purpose.</p>
+        </div>
+      </div>
+
+      <!-- What is TW -->
+      <div class="subsection" id="technical-def">
+        <h3 class="sub-title">What is Technical Writing?</h3>
+
+        <div class="callout callout-blue">
+          <span class="callout-icon">📖</span>
+          <p><strong>Definition:</strong> A specialized field of communication whose purpose is to <em>convey technical
+              and scientific information and ideas accurately and efficiently</em>. It deals with subjects in
+            engineering, business, trade, government, technology, and science.</p>
+        </div>
+
+        <p>The goal of technical writing is to <strong>enable readers to use a technology or understand a process or
+            concept</strong>. The writer's voice is secondary — the subject matter is primary. Style is direct and
+          utilitarian, emphasizing <strong>exactness and clarity</strong> over elegance.</p>
+
+        <h4 class="sub-sub-title">Four Major Categories of Technical Documents</h4>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">📊 Day-to-Day Business Reports</div>
+            <p style="font-size:0.82rem;margin:0;color:var(--subtle)">Progress reports, recommendation reports, memos,
+              inquiry letters, emails within and outside the organization.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📚 Education & Knowledge Sharing</div>
+            <p style="font-size:0.82rem;margin:0;color:var(--subtle)">Technical papers, magazine articles, books, theses
+              — for teaching and sharing knowledge.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📜 Patents</div>
+            <p style="font-size:0.82rem;margin:0;color:var(--subtle)">Highly specific documents that describe the
+              purpose, specs, dimensions, parts, and power source of inventions.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📋 Operational Manuals</div>
+            <p style="font-size:0.82rem;margin:0;color:var(--subtle)">Instructions and procedures for using, assembling,
+              repairing, or maintaining products and systems.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="subsection" id="history">
+        <h3 class="sub-title">History of Technical Writing</h3>
+        <div class="steps">
+          <div class="step">
+            <p><strong>Prehistoric Era</strong> — Cave paintings in France and Spain illustrated hunting techniques,
+              representing the earliest form of instructional/technical communication.</p>
+          </div>
+          <div class="step">
+            <p><strong>Babylonians</strong> — Clay tablets with technical information on astronomy, mathematics,
+              agriculture, and instruction manuals for making beer.</p>
+          </div>
+          <div class="step">
+            <p><strong>Ancient Egypt</strong> — Papyrus writings in medicine and mathematics.</p>
+          </div>
+          <div class="step">
+            <p><strong>Ancient Greeks</strong> — Most prolific early technical writers; writings on mathematics,
+              biology, psychology, and physical sciences laid foundations for Western civilization.</p>
+          </div>
+          <div class="step">
+            <p><strong>16th Century</strong> — First manual on military weapons marked the start of modern instructional
+              writing.</p>
+          </div>
+          <div class="step">
+            <p><strong>World War II</strong> — Tremendous acceleration in technical writing; needed to explain new
+              devices and weapons quickly to non-scientists and soldiers.</p>
+          </div>
+          <div class="step">
+            <p><strong>Today</strong> — Technical writers explain systems, consumer products, and services generated by
+              advances in computer science, engineering, agriculture, biology, chemistry, and physics.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Genres of TW -->
+      <div class="subsection" id="genres-tw">
+        <h3 class="sub-title">Genres of Technical Writing</h3>
+        <div class="grid3">
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📖 Instruction Manuals</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📋 Procedure Guidelines</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📊 Reports</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📐 Specifications</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📝 Proposals</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📄 CV/Resumes</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">📧 Business Correspondence</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">🔬 Research Papers &amp; Articles</div>
+          </div>
+          <div class="card" style="padding:1rem">
+            <div style="font-size:0.82rem;color:var(--subtle)">🖥 User Manuals &amp; Web Pages</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Importance of TW -->
+      <div class="subsection">
+        <h3 class="sub-title">Importance of Technical Writing</h3>
+        <p>Technical writing is not just a skill — it is a <strong>professional necessity</strong>. Here's why:</p>
+        <div class="steps">
+          <div class="step">
+            <p><strong>Constitutes significant workload</strong> — Engineers, scientists, and developers write progress
+              reports, recommendation reports, memos, inquiry letters daily.</p>
+          </div>
+          <div class="step">
+            <p><strong>Facilitates communication</strong> — With co-workers, clients, and supervisors both inside and
+              outside the organization. Technical skills alone are not enough.</p>
+          </div>
+          <div class="step">
+            <p><strong>Necessary for career success</strong> — Organizations judge engineers partly by how well they
+              write. Poorly written docs reveal inefficiency. Engineers who communicate clearly get promoted.</p>
+          </div>
+          <div class="step">
+            <p><strong>Enables product use and safety</strong> — Without clear specs/directions, products can be
+              dangerous. TW prevents misuse and reduces liability.</p>
+          </div>
+          <div class="step">
+            <p><strong>Required for patents</strong> — A patent must clearly describe the machine's purpose, dimensions,
+              parts, and power source using technical writing.</p>
+          </div>
+          <div class="step">
+            <p><strong>Reduces costs and errors</strong> — Well-written manuals reduce downtime, training costs, and
+              support costs.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Functions of TW -->
+      <div class="subsection">
+        <h3 class="sub-title">Functions of Technical Writing</h3>
+        <div class="grid2">
+          <ul class="styled">
+            <li>Serve as basis for <strong>management decisions</strong></li>
+            <li>Furnish needed <strong>information</strong></li>
+            <li>Give <strong>instructions</strong></li>
+            <li>Explain <strong>techniques</strong></li>
+            <li>Report <strong>achievements</strong></li>
+            <li>Analyze <strong>problem areas</strong></li>
+            <li>Determine design and <strong>system requirements</strong></li>
+          </ul>
+          <ul class="styled">
+            <li>Serve as basis for <strong>public relations</strong></li>
+            <li>Provide report to <strong>stockholders</strong></li>
+            <li>Develop a <strong>product</strong></li>
+            <li>Provide <strong>service</strong></li>
+            <li>Record <strong>business proposals</strong></li>
+            <li>Procure business through <strong>proposals</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Differences -->
+      <div class="subsection" id="differences">
+        <h3 class="sub-title">TW vs. Academic Writing</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>Technical / Business Writing</th>
+                <th>Academic Writing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Primary Mode</td>
+                <td>Lists, bullets, short paragraphs</td>
+                <td>Prose paragraphs</td>
+              </tr>
+              <tr>
+                <td>Thesis Placement</td>
+                <td>Often in heading or first phrase</td>
+                <td>In opening paragraphs</td>
+              </tr>
+              <tr>
+                <td>Structure</td>
+                <td>Paragraphs, lists, or sections</td>
+                <td>Divided by paragraph</td>
+              </tr>
+              <tr>
+                <td>Source Permanence</td>
+                <td>Only as permanent as the message</td>
+                <td>Permanent record</td>
+              </tr>
+              <tr>
+                <td>Lists vs. Paragraphs</td>
+                <td>Lists preferred</td>
+                <td>Paragraphs preferred</td>
+              </tr>
+              <tr>
+                <td>Sentence Style</td>
+                <td>Parallelism, repeated patterns</td>
+                <td>Sentence diversity valued</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="sub-sub-title">TW vs. Literary Writing</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Point of Difference</th>
+                <th>Technical Writing</th>
+                <th>Literary Writing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rules</td>
+                <td>Governed by formal rules and structures</td>
+                <td>Experimental; may break rules intentionally</td>
+              </tr>
+              <tr>
+                <td>Organization</td>
+                <td>Highly organized and logically structured</td>
+                <td>Can be loosely organized</td>
+              </tr>
+              <tr>
+                <td>Clarity</td>
+                <td>High degree of clarity; purpose stated upfront</td>
+                <td>Implicit; challenges reader's intellect</td>
+              </tr>
+              <tr>
+                <td>Grammar</td>
+                <td>Strictly adheres to grammar/punctuation rules</td>
+                <td>Also attempts to, but with more freedom</td>
+              </tr>
+              <tr>
+                <td>Tone &amp; Style</td>
+                <td>Formal, objective, serious</td>
+                <td>Varies: humorous, sarcastic, poetic, emotional</td>
+              </tr>
+              <tr>
+                <td>Stylistic Devices</td>
+                <td>Straightforward and direct</td>
+                <td>Rich use of metaphors, similes, irony, puns</td>
+              </tr>
+              <tr>
+                <td>Vocabulary</td>
+                <td>Standard, formal, may include technical terms</td>
+                <td>Varies with audience and desired tone</td>
+              </tr>
+              <tr>
+                <td>Content</td>
+                <td>Factual, specialized, based on data</td>
+                <td>Wide variety from serious to trivial</td>
+              </tr>
+              <tr>
+                <td>Authenticity</td>
+                <td>Always cites sources clearly</td>
+                <td>Sources may be unclear or omitted</td>
+              </tr>
+              <tr>
+                <td>Visual Aids</td>
+                <td>Tables, graphs, figures used extensively</td>
+                <td>Rarely used</td>
+              </tr>
+              <tr>
+                <td>Summary</td>
+                <td>Informative, unemotional, limited interpretation</td>
+                <td>Entertains, appeals to imagination and emotions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Computer Science Writing -->
+      <div class="subsection">
+        <h3 class="sub-title">Technical Writing in Computer Science</h3>
+        <p>CS careers demand well-developed technical writing skills from day one — starting with your CV and cover
+          letter.</p>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">📁 Project Proposals</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Introduce projects to clients/management. Identify
+              the problem and present the solution. Must convince audience of viability.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📄 POS — Project Overview Spec</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">First refinement of proposal. Mutual understanding
+              between dev team and client. Includes goals, budget, schedule, constraints.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📌 SPMP — Software Project Management Plan</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Describes management process, risks, schedules,
+              budget, tools. Focuses on <em>how</em> the project is managed, not the software itself.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📃 SRS — Software Requirements Specification</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Completely defines functionality via use-cases.
+              Includes non-functional requirements (security, performance, reliability). Acts like a contract.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🏗 SDS / SDD — Software Design Spec</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Describes system architecture, how modules
+              interact. Uses diagrams. Details design decisions for maintainability.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🧪 STS &amp; STR — System Test Specs &amp; Report</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Plans for testing software. Specifies test cases
+              and procedures. Results compiled into a System Test Report evaluating requirements satisfaction.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📙 User Manuals</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Step-by-step guides for using software. Easy to
+              follow, targeted to end users.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">💬 Code Comments</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Allow other developers to understand intended
+              behavior. Critical for modification and maintenance.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📧 Memoranda (Memos)</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Fulfill a variety of objectives within
+              organizations. Style depends on purpose. Usually a few pages with clear intent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+       UNIT 2: STYLE OF TECHNICAL WRITING
+  ════════════════════════════════════════════ -->
+    <section class="unit s2" id="style">
+      <div class="unit-header">
+        <div class="unit-number n2">02</div>
+        <h2 class="unit-title">Style of Technical Writing</h2>
+      </div>
+
+      <div class="callout callout-purple">
+        <span class="callout-icon">📖</span>
+        <p><strong>Style Defined:</strong> "Proper words in the proper places" (Jonathan Swift) / "Dress of thoughts"
+          (Seneca). In TW, it's how a writer arranges words, sentences, and paragraphs to communicate thoughts clearly
+          to a specific audience.</p>
+      </div>
+
+      <h4 class="sub-sub-title">10 Core Attributes of Technical Writing</h4>
+      <div class="grid2">
+        <div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Pertains to a <strong>technical subject</strong></p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Has a clear <strong>purpose</strong></p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Has a measurable <strong>objective</strong></p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Conveys <strong>information, facts, and data</strong></p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Is <strong>impersonal</strong> in nature</p>
+          </div>
+        </div>
+        <div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Is <strong>concise</strong> — no wasted words</p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Is <strong>directed</strong> at a specific audience</p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Uses a particular <strong>style and format</strong></p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p>Is <strong>archival</strong> — kept for record</p>
+          </div>
+          <div class="highlight-row">
+            <div class="highlight-dot" style="background:var(--accent2)"></div>
+            <p><strong>Cites contributions</strong> of others</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Language -->
+      <div class="subsection" id="language">
+        <h3 class="sub-title">1. Language</h3>
+
+        <h4 class="sub-sub-title">1.1 Formal English</h4>
+        <p>Technical writing uses formal, direct language. Avoid items that undermine professionalism:</p>
+
+        <div class="grid3">
+          <div class="card">
+            <div class="card-title">❌ Colloquialisms</div>
+            <p style="font-size:0.8rem;margin:0;color:var(--subtle)">Local/regional expressions imitating informal
+              speech. <br><em>"gonna"</em> → "going to"; <em>"passed on"</em> → "died"</p>
+          </div>
+          <div class="card">
+            <div class="card-title">⚠️ Jargon / Slang</div>
+            <p style="font-size:0.8rem;margin:0;color:var(--subtle)">Terminology specific to a group. If used, always
+              define it. <em>"run"</em> (computer simulation), <em>"hang on"</em> (wait)</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🚫 Clichés</div>
+            <p style="font-size:0.8rem;margin:0;color:var(--subtle)">Worn-out expressions that have lost their original
+              meaning. "Bite the bullet," "in the long run," "avoid like the plague"</p>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">Cliché Replacement Guide</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliché</th>
+                <th>Replacement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bite the bullet</td>
+                <td>Sacrifice</td>
+              </tr>
+              <tr>
+                <td>Don't mince words</td>
+                <td>Be precise</td>
+              </tr>
+              <tr>
+                <td>Drop in the bucket</td>
+                <td>Tiny</td>
+              </tr>
+              <tr>
+                <td>In this day and age</td>
+                <td>Today</td>
+              </tr>
+              <tr>
+                <td>Ins and outs</td>
+                <td>Details</td>
+              </tr>
+              <tr>
+                <td>No mean feat</td>
+                <td>Difficult</td>
+              </tr>
+              <tr>
+                <td>Only time will tell</td>
+                <td>Eventually</td>
+              </tr>
+              <tr>
+                <td>Whets the appetite</td>
+                <td>Invites</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-orange">
+          <span class="callout-icon">⚖️</span>
+          <p><strong>Sexist Language:</strong> Avoid gender-specific words for roles that can be either gender. Do not
+            use <em>he/she</em> (disrupts text flow). Instead, use plurals, restructure the sentence, or alternate
+            <em>he and she</em>.
+          </p>
+        </div>
+
+        <h4 class="sub-sub-title">1.2 Simplicity</h4>
+        <p>Use technical words only when necessary. Avoid <strong>gobbledygook</strong> — unintelligible, pompous, stiff
+          language.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Jargonized / Pompous</th>
+                <th>Simple &amp; Formal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>We will use the input of each department to finalize our game plan.</td>
+                <td>We will consider the suggestions of each department to complete our programming.</td>
+              </tr>
+              <tr>
+                <td>At this juncture, the aforementioned procedure should be utilized.</td>
+                <td>The plan we discussed should be used now.</td>
+              </tr>
+              <tr>
+                <td>We should commence operational capabilities in systematic increments.</td>
+                <td>We should begin the project step by step.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="sub-sub-title">1.3 Objectivity</h4>
+        <p>Technical writing is characterized by <strong>objectivity and impersonality</strong>. Avoid personal,
+          subjective, emotionally stimulating, and judgmental tone. Objectivity establishes credibility.</p>
+        <div class="compare">
+          <div class="compare-col col-a">
+            <div class="col-label">❌ Subjective</div>
+            <ul>
+              <li>"The results of the tests were incredibly wonderful."</li>
+            </ul>
+          </div>
+          <div class="compare-col col-b">
+            <div class="col-label">✅ Objective</div>
+            <ul>
+              <li>"Ninety percent of the tested samples met the accepted criteria."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout callout-blue">
+          <span class="callout-icon">📌</span>
+          <p>To achieve objective, impersonal style: use <strong>passive voice</strong> and <strong>third-person point
+              of view</strong> in scientific writing where appropriate. However, don't overdo it — active voice is
+            generally preferred for clarity.</p>
+        </div>
+
+        <h4 class="sub-sub-title">1.4 Direct Language</h4>
+        <p>Every word must have a place and a meaning. Use direct statements and <strong>active voice</strong>. Avoid
+          past tense except in executive summaries. Use future tense for projections.</p>
+
+        <h4 class="sub-sub-title">1.5 Negatives — Use Positive Form</h4>
+        <p>Prefer positive declarations over negative ones. They are more direct and promote precise language.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Negative Form</th>
+                <th>Positive Form</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Do not include</td>
+                <td>Exclude</td>
+              </tr>
+              <tr>
+                <td>Do not permit</td>
+                <td>Forbid</td>
+              </tr>
+              <tr>
+                <td>Do not allow</td>
+                <td>Disallow</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="sub-sub-title">1.6 Simple Terms</h4>
+        <p>Impress with <strong>analysis, not vocabulary</strong>. Replace complex words with simpler ones that convey
+          the same meaning. "Utilize" → "use"; "altercation" → "dispute".</p>
+
+        <h4 class="sub-sub-title">1.7 Action Verbs</h4>
+        <p>Replace weak verb-preposition combinations with precise action verbs: <em>go with → accompany; find out →
+            discover; start out → begin</em>.</p>
+
+        <h4 class="sub-sub-title">1.8 Concreteness</h4>
+        <p>Be <strong>specific, definite, and vivid</strong> rather than vague. Use denotative (direct,
+          dictionary-based) rather than connotative words.</p>
+        <div class="example-box">
+          <div class="label">Vague → Concrete</div>
+          <span class="bad">"Student GMAT scores are higher."</span><br>
+          <span class="good">"In 1996, the GMAT score averaged 600; by 1997 they had risen to 610."</span>
+        </div>
+        <div class="example-box">
+          <div class="label">Bland → Vivid</div>
+          <span class="bad">"This is a long letter."</span><br>
+          <span class="good">"This letter is three times as long as you said it would be."</span>
+        </div>
+      </div>
+
+      <!-- Conciseness -->
+      <div class="subsection" id="conciseness">
+        <h3 class="sub-title">2. Conciseness</h3>
+        <p><strong>Definition:</strong> Saying what you want to say in the fewest possible words without sacrificing
+          important information. A concise message is complete without being wordy.</p>
+
+        <p>Conciseness can be achieved at two levels:</p>
+        <ul class="styled">
+          <li><strong>Limit paragraph length</strong></li>
+          <li><strong>Limit word and sentence length</strong></li>
+        </ul>
+
+        <h4 class="sub-sub-title">Techniques for Conciseness</h4>
+
+        <div class="card">
+          <div class="card-title">📌 Replace Abstract Nouns with Verbs</div>
+          <div class="example-box" style="margin-top:0.75rem">
+            <div class="label">Wordy → Concise</div>
+            <span class="bad">"The acquisition of the property was accomplished through long and hard
+              negotiations."</span><br>
+            <span class="good">"The property was acquired through long and hard negotiation."</span><br><br>
+            <span class="bad">"Confirmation of the contract occurred yesterday."</span><br>
+            <span class="good">"The contract was confirmed yesterday."</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Use Short Words (1-2 syllable preference)</div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Long Word</th>
+                  <th>Short Word</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>cognizant</td>
+                  <td>know</td>
+                </tr>
+                <tr>
+                  <td>endeavor</td>
+                  <td>try</td>
+                </tr>
+                <tr>
+                  <td>domicile</td>
+                  <td>home</td>
+                </tr>
+                <tr>
+                  <td>morbidity</td>
+                  <td>death</td>
+                </tr>
+                <tr>
+                  <td>terminate</td>
+                  <td>end</td>
+                </tr>
+                <tr>
+                  <td>utilize</td>
+                  <td>use</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Avoid Redundancy</div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Wordy</th>
+                  <th>Concise</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>We collaborated together on the project.</td>
+                  <td>We collaborated on the project.</td>
+                </tr>
+                <tr>
+                  <td>This is a brand new innovation.</td>
+                  <td>This is an innovation.</td>
+                </tr>
+                <tr>
+                  <td>The other alternative is to eat soup.</td>
+                  <td>The alternative is to eat soup.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Avoid Prepositional Phrases</div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Wordy</th>
+                  <th>Concise</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>I will see you in the near future.</td>
+                  <td>I will see you soon.</td>
+                </tr>
+                <tr>
+                  <td>He drove at a rapid rate.</td>
+                  <td>He drove rapidly.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Avoid Passive Voice (where possible)</div>
+          <div class="example-box" style="margin-top:0.75rem">
+            <span class="bad">"The window was broken by the boys." (7 words, weak verb "was")</span><br>
+            <span class="good">"The boys broke the window." (5 words, strong verb "broke")</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Avoid Shun Words (-tion / -sion endings)</div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Shun Word</th>
+                  <th>Concise Version</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Came to the conclusion</td>
+                  <td>Concluded / decided</td>
+                </tr>
+                <tr>
+                  <td>With the exception of</td>
+                  <td>Except for</td>
+                </tr>
+                <tr>
+                  <td>Make revisions</td>
+                  <td>Revise</td>
+                </tr>
+                <tr>
+                  <td>Consider implementation</td>
+                  <td>Implement</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Avoid Camouflaged Words</div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Camouflaged</th>
+                  <th>Concise</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Make an amendment to</td>
+                  <td>Amend</td>
+                </tr>
+                <tr>
+                  <td>Have a meeting</td>
+                  <td>Meet</td>
+                </tr>
+                <tr>
+                  <td>For the purpose of discussing</td>
+                  <td>Discuss</td>
+                </tr>
+                <tr>
+                  <td>Thanking you in advance</td>
+                  <td>Thank you</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 Avoid Expletive Pattern</div>
+          <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Avoid starting sentences with <strong>There
+              is/are/was/were</strong> or <strong>It is/was</strong>.</p>
+          <div class="example-box" style="margin-top:0.75rem">
+            <span class="bad">"There are three people who will work for Acme."</span><br>
+            <span class="good">"Three people will work for Acme."</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clarity -->
+      <div class="subsection" id="clarity">
+        <h3 class="sub-title">3. Clarity</h3>
+        <p>The <strong>most important criterion</strong> for effective technical writing. If a reader responds with
+          "Huh?" — the writer has failed. Lack of clarity can lead to:</p>
+        <div class="grid3">
+          <div class="callout callout-orange" style="flex-direction:column;gap:0.3rem;text-align:center">
+            <div style="font-size:1.5rem">😟</div>
+            <p style="margin:0"><strong>BAD</strong> — Equipment damaged; reader returns it; costs and bad PR.</p>
+          </div>
+          <div class="callout callout-red" style="flex-direction:column;gap:0.3rem;text-align:center">
+            <div style="font-size:1.5rem">🤕</div>
+            <p style="margin:0"><strong>WORSE</strong> — Owner is hurt: pain, anxiety, doctor's bills, bad PR.</p>
+          </div>
+          <div class="callout callout-red" style="flex-direction:column;gap:0.3rem;text-align:center">
+            <div style="font-size:1.5rem">⚖️</div>
+            <p style="margin:0"><strong>EVEN WORSE</strong> — Company is sued; writer loses job.</p>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">How to Achieve Clarity</h4>
+
+        <div class="steps">
+          <div class="step">
+            <p><strong>Provide Specific Detail:</strong> Use quantified, specific information. Replace vague adjectives
+              (<em>some, recently, good</em>) with exact numbers and dates.</p>
+          </div>
+          <div class="step">
+            <p><strong>Answer the Reporter's Questions:</strong> <em>Who? What? When? Where? Why? How?</em> — Every
+              important technical document should address all six.</p>
+          </div>
+          <div class="step">
+            <p><strong>Use Familiar Words:</strong> Avoid obscure words. Replace <em>accede</em> with "agree,"
+              <em>inasmuch as</em> with "because," <em>ascertain</em> with "find out," <em>cognizant</em> with "know."
+            </p>
+          </div>
+          <div class="step">
+            <p><strong>Clear Pronoun Reference:</strong> Ensure every pronoun clearly refers to a specific noun. When in
+              doubt, repeat the noun to avoid ambiguity (especially in safety-critical writing).</p>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">Text Flow — Creating Coherent Paragraphs</h4>
+        <div class="card">
+          <div class="card-title">2.1 Coherent Paragraphs</div>
+          <p style="font-size:0.85rem;color:var(--subtle);margin:0.5rem 0 0">Each paragraph = one central topic. ~5
+            sentences. Place key topic at start of sentence, new information at end. Arrange facts from general to
+            specific. Link paragraphs by previewing the next one.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">2.2 Transitional Words</div>
+          <p style="font-size:0.85rem;color:var(--subtle);margin:0.5rem 0 0">Connect ideas within and between
+            paragraphs. Examples: <em>earlier/later</em> (time); <em>next</em> (sequence); <em>in conclusion</em> (end);
+            <em>also/but</em> (compare/contrast); <em>because/therefore</em> (causality);
+            <em>furthermore/similarly/moreover</em> (addition).
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">2.3 Sentence Variety</div>
+          <p style="font-size:0.85rem;color:var(--subtle);margin:0.5rem 0 0">Vary length and structure. Avoid very short
+            or excessively long sentences. Use <strong>Simple, Compound, Complex, and Compound-Complex</strong>
+            sentences for flow. Simplify verb phrases for non-native readers.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">2.4 Acronyms and Initialisms</div>
+          <p style="font-size:0.85rem;color:var(--subtle);margin:0.5rem 0 0">Acronym = pronounced as a word (RAM,
+            scuba). Initialism = pronounced letter by letter (IBM). First appearance: write full name then abbreviation
+            in parentheses. Plural: add a lowercase <em>s</em>. Possessive: add <em>'s</em>.</p>
+        </div>
+      </div>
+
+      <!-- Accuracy -->
+      <div class="subsection" id="accuracy">
+        <h3 class="sub-title">4. Accuracy</h3>
+        <p>Errors in technical writing make the company and employee look bad. More critically, errors can cause
+          <strong>damages, injuries, lawsuits, or serious misunderstandings</strong>.
+        </p>
+
+        <div class="grid3">
+          <div class="card">
+            <div class="card-title">📄 Document Accuracy</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Proper coverage of topics in appropriate detail.
+              Requires a clear problem statement and preliminary outline.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">✍️ Stylistic Accuracy</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Careful use of language to express meaning.
+              Involves paragraph/sentence structure and word choice.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🔬 Technical Accuracy</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Grounded in technical mastery of the subject.
+              Represents data with minimum distortion. Depends on conceptual command of vocabulary.</p>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">Proofreading Techniques</h4>
+        <ul class="styled">
+          <li>Use spell check — but remember: it won't catch <em>form/from, to/too, except/accept</em>.</li>
+          <li>Let it sit — review after a day or weekend for fresh eyes.</li>
+          <li>Use peer evaluations — others spot errors you miss.</li>
+          <li>Read it aloud — you can often <em>hear</em> errors.</li>
+          <li>Read it backwards — removes context so you catch individual word errors.</li>
+        </ul>
+      </div>
+
+      <!-- Numbers -->
+      <div class="subsection">
+        <h3 class="sub-title">5. Numbers — Rules</h3>
+        <div class="steps">
+          <div class="step">
+            <p><strong>Spell out numbers 1–10</strong> in isolation: "The discussion lasted ten minutes."</p>
+          </div>
+          <div class="step">
+            <p><strong>Spell out indefinite numbers</strong> expressible in 1–2 words: "Approximately thirty appliances
+              were damaged."</p>
+          </div>
+          <div class="step">
+            <p><strong>Spell out a number that starts a sentence.</strong> If awkward, restructure the sentence.</p>
+          </div>
+          <div class="step">
+            <p><strong>Use numerals for exact numbers above 10:</strong> "The corporate file has been missing for 31
+              days."</p>
+          </div>
+          <div class="step">
+            <p><strong>Consistent usage:</strong> If several numbers perform similar functions in a sentence, express
+              them all as figures. "21 ranges, 9 refrigerators, 37 washers, 10 dryers."</p>
+          </div>
+          <div class="step">
+            <p><strong>Spell out million/billion</strong> when rounding: "$7 million."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- That vs Which -->
+      <div class="subsection">
+        <h3 class="sub-title">6. That vs. Which</h3>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">"That" — Restrictive (no comma)</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Defines and restricts; the information is
+              <strong>critical</strong> to the meaning.
+            </p>
+            <div class="example-box" style="margin-top:0.5rem">"The article <strong>that</strong> was printed yesterday
+              is inaccurate."</div>
+          </div>
+          <div class="card">
+            <div class="card-title">"Which" — Non-Restrictive (with comma)</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Adds descriptive,
+              <strong>incidental</strong> information; preceded by a comma, dash, or parenthesis.
+            </p>
+            <div class="example-box" style="margin-top:0.5rem">"She wore a baseball cap, <strong>which</strong> is
+              unexpected for a ballerina."</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organization -->
+      <div class="subsection" id="organization">
+        <h3 class="sub-title">7. Patterns of Organization</h3>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">🗺 Spatial</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Used for describing physical objects or spaces.
+              Organize left to right, top to bottom, inside to outside, clockwise. Good for architectural or mechanical
+              descriptions.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📅 Chronological</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Used to document time or steps in a procedure.
+              Essential for lab reports, procedures, emergency reports, step-by-step instructions.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">⭐ By Importance</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Most important ideas at the top. Page space is
+              like real estate — bury key data and readers miss it. Used in agendas, recommendations.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">⚖️ Comparison / Contrast</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Compare similarities, contrast differences. Common
+              in business proposals when evaluating options or competing products.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🔧 Problem / Solution</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0">Every proposal is problem/solution oriented.
+              Identify the problem, then present your solution, benefits, and why it's better than alternatives.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+       UNIT 3: THE TECHNICAL WRITING PROCESS
+  ════════════════════════════════════════════ -->
+    <section class="unit s3" id="process">
+      <div class="unit-header">
+        <div class="unit-number n3">03</div>
+        <h2 class="unit-title">The Technical Writing Process</h2>
+      </div>
+
+      <div class="callout callout-green">
+        <span class="callout-icon">💡</span>
+        <p><strong>Key Insight:</strong> Technical writing is a <em>recursive</em> process — not linear. Earlier
+          sections may need revision as new sections are completed. Begin writing components as you complete phases of
+          your work project, so parts are ready to revise when you're done with the underlying task.</p>
+      </div>
+
+      <h4 class="sub-sub-title">The Three Main Phases</h4>
+      <div class="grid3">
+        <div class="card" style="border-color:rgba(52,211,153,0.3)">
+          <div class="card-title" style="color:var(--accent3)">📋 Planning</div>
+          <ul class="styled" style="margin:0.5rem 0 0">
+            <li>Analyzing purpose</li>
+            <li>Analyzing audience</li>
+            <li>Determining document type</li>
+            <li>Analyzing writing situation</li>
+            <li>Collecting data</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:rgba(79,142,247,0.3)">
+          <div class="card-title" style="color:var(--accent)">✍️ Drafting</div>
+          <ul class="styled" style="margin:0.5rem 0 0">
+            <li>Writing first draft</li>
+            <li>Organizing content</li>
+            <li>Creating text flow</li>
+            <li>Adding visuals/structure</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:rgba(167,139,250,0.3)">
+          <div class="card-title" style="color:var(--accent2)">🔄 Revising</div>
+          <ul class="styled" style="margin:0.5rem 0 0">
+            <li>Editing for grammar</li>
+            <li>Editing for mechanics</li>
+            <li>Peer review</li>
+            <li>Final proofreading</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Analyzing Purpose -->
+      <div class="subsection" id="purpose-types">
+        <h3 class="sub-title">Analyzing Purpose</h3>
+        <p>A document has <strong>two purposes</strong>:</p>
+        <div class="compare">
+          <div class="compare-col col-a">
+            <div class="col-label">Writer's Purpose</div>
+            <ul>
+              <li>Why is the writer writing?</li>
+              <li>What does the writer want the reader to know and do?</li>
+            </ul>
+          </div>
+          <div class="compare-col col-b">
+            <div class="col-label">Reader's Purpose</div>
+            <ul>
+              <li>Why is the reader reading?</li>
+              <li>What does the reader want to know or do?</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">The 6 Writer Purposes</h4>
+
+        <div class="card" style="margin-bottom:0.75rem">
+          <div class="card-title">1. To Instruct <span class="pill pill-green">Purpose Type</span></div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Teach how to perform a task. Cover:
+            purpose, steps, conditions, warnings. <br><em>Examples: Training manuals, operator manuals, consumer
+              instructions</em></p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem">
+          <div class="card-title">2. To Record <span class="pill pill-green">Purpose Type</span></div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Document tests, research results, decisions
+            made, responsibilities assigned, actions and their consequences. <br><em>Examples: Minutes, file reports,
+              lab reports</em></p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem">
+          <div class="card-title">3. To Inform (for Decision Making) <span class="pill pill-green">Purpose Type</span>
+          </div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Provide accurate data and thorough analysis
+            to enable the reader to make decisions. Specific facts required. <br><em>Examples: Progress reports,
+              feasibility reports, investigative reports</em></p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem">
+          <div class="card-title">4. To Inform (without Decision Making) <span class="pill pill-green">Purpose
+              Type</span></div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Explain the who, what, where, when, why,
+            and how. Show cause and effect. Relate information to company interest. <br><em>Examples: Bulletins,
+              literature reviews, product descriptions</em></p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem">
+          <div class="card-title">5. To Recommend <span class="pill pill-green">Purpose Type</span></div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Provide reasons, expected benefits, and
+            explain why the recommendation is preferable to alternatives. <br><em>Examples: Simple proposals,
+              feasibility studies, recommendation reports</em></p>
+        </div>
+        <div class="card" style="margin-bottom:0.75rem">
+          <div class="card-title">6. To Persuade <span class="pill pill-green">Purpose Type</span></div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Provide sound evidence, counter-arguments,
+            importance of action, consequences of inaction, and benefits. <br><em>Examples: Construction bids, grant
+              applications, technical news releases</em></p>
+        </div>
+      </div>
+
+      <!-- Analyzing Situation -->
+      <div class="subsection">
+        <h3 class="sub-title">Analyzing the Writing Situation</h3>
+        <p>No writer works in isolation. Consider the organizational environment, communication atmosphere, government
+          regulations, professional standards, etc. Ask:</p>
+        <ul class="styled">
+          <li>Is the subject controversial within the organization?</li>
+          <li>What events created the need for this document?</li>
+          <li>What continuing events depend on this document?</li>
+          <li>Given the deadline, what information can realistically be included?</li>
+          <li>What influence will this document have on company operations or goals?</li>
+          <li>Is the subject controlled by government regulations?</li>
+          <li>What external groups are involved, and why?</li>
+        </ul>
+      </div>
+
+      <!-- Analyzing Audience -->
+      <div class="subsection" id="audience">
+        <h3 class="sub-title">Analyzing the Audience</h3>
+        <div class="callout callout-green">
+          <span class="callout-icon">🎯</span>
+          <p>For most technical writers, <strong>audience analysis is the most important consideration</strong> in
+            planning, writing, and reviewing a document. You "adapt" your writing to meet the needs, interests, and
+            background of your readers.</p>
+        </div>
+
+        <h4 class="sub-sub-title">Categories of Technical Readers</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Reader Type</th>
+                <th>Reading Purpose &amp; Needs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Executives</td>
+                <td>Make decisions based on applicability and profitability. Want <strong>conclusions and
+                    alternatives</strong>, not details.</td>
+              </tr>
+              <tr>
+                <td>Technologists, Engineers, Scientists</td>
+                <td>Information transfer. Need <strong>facts, details, theory, methodology, and conclusions</strong>.
+                </td>
+              </tr>
+              <tr>
+                <td>Technicians</td>
+                <td>Troubleshoot, modify, upgrade, maintain equipment. Need <strong>practical information</strong> in
+                  easy-to-use format with visuals.</td>
+              </tr>
+              <tr>
+                <td>Operators</td>
+                <td>Operate equipment or perform procedures. Need <strong>step-by-step commands</strong> with visuals.
+                </td>
+              </tr>
+              <tr>
+                <td>Non-technical Persons</td>
+                <td>Read for interest and information. Require simple language, glossaries, summaries.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="sub-sub-title">6 Key Questions for Audience Analysis</h4>
+
+        <div class="card">
+          <div class="card-title">Q1 — Who are my specific readers?</div>
+          <div class="compare" style="margin-top:0.75rem">
+            <div class="compare-col col-a">
+              <div class="col-label">External</div>
+              <ul>
+                <li>Customers, vendors, stockholders</li>
+                <li>Government agencies</li>
+                <li>Industry associations</li>
+                <li>General public</li>
+              </ul>
+            </div>
+            <div class="compare-col col-b">
+              <div class="col-label">Internal</div>
+              <ul>
+                <li>Supervisors (decision makers)</li>
+                <li>Subordinates (lower rank)</li>
+                <li>Peers (equals)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q2 — Why do they need this document?</div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">What specific information does the reader
+            need? Why do they need it? What material is appropriate and in what sequence?</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q3 — How will they use it?</div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">Technical documents are rarely read
+            beginning to end. Readers access specific sections based on their needs. Design accordingly (headings,
+            index, abstracts).</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q4 — What is their attitude? (Hostile / Friendly / Neutral)</div>
+          <p style="font-size:0.83rem;color:var(--subtle);margin:0.5rem 0 0">A hostile reader needs persuasion
+            techniques — organize from generally accepted to less accepted data. A reluctant reader needs lists,
+            headings, and emphasis on importance.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q5 — What is their technical knowledge level?</div>
+          <div class="table-wrap" style="margin-top:0.75rem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Characteristics</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Expert</td>
+                  <td>Few definitions needed. Requires detailed technical data, methodology.</td>
+                </tr>
+                <tr>
+                  <td>Semi-Expert</td>
+                  <td>Variable knowledge. Needs more definitions and explanations of general principles.</td>
+                </tr>
+                <tr>
+                  <td>Non-Expert (Lay)</td>
+                  <td>No specialized training. Needs glossaries of terms, checklists, simple graphics, and summaries.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">Primary vs. Secondary Readers</h4>
+        <div class="compare">
+          <div class="compare-col col-a">
+            <div class="col-label">Primary Readers</div>
+            <ul>
+              <li>The intended audience</li>
+              <li>Will act or decide based on document</li>
+              <li>Can be one or many</li>
+            </ul>
+          </div>
+          <div class="compare-col col-b">
+            <div class="col-label">Secondary Readers</div>
+            <ul>
+              <li>May be affected or influenced</li>
+              <li>Not the original audience</li>
+              <li>May include lawyers, other departments</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">Strategies for Multiple Primary Readers</h4>
+        <ul class="styled">
+          <li>Use <strong>headings</strong> that direct different readers to relevant sections.</li>
+          <li>Write a <strong>different cover letter</strong> emphasizing relevant sections for each reader type.</li>
+          <li>Sometimes write <strong>separate reports</strong> for different audiences.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+       UNIT 4: SYNTHESIS WRITING
+  ════════════════════════════════════════════ -->
+    <section class="unit s4" id="synthesis">
+      <div class="unit-header">
+        <div class="unit-number n4">04</div>
+        <h2 class="unit-title">Synthesis Writing</h2>
+      </div>
+
+      <div class="callout callout-orange">
+        <span class="callout-icon">📖</span>
+        <p><strong>Definition:</strong> A synthesis is a written discussion that incorporates support from several
+          sources of differing views. It identifies relationships between sources through common themes or traits, and
+          creates <em>new knowledge</em> out of existing knowledge.</p>
+      </div>
+
+      <p>A synthesis essay combines sources with the writer's own position to form a <strong>cohesive, supported
+          argument</strong>, with accurate citations. It differs from a simple argumentative paper by focusing more on
+        <em>relationships between sources</em> than on a single point. It is closer to a compare-and-contrast paper in
+        structure.
+      </p>
+
+      <div class="callout callout-red">
+        <span class="callout-icon">🚫</span>
+        <p><strong>What synthesis is NOT:</strong> It is not a reflective or narrative paper. First-person writing and
+          subjective opinion are <strong>not acceptable</strong>.</p>
+      </div>
+
+      <!-- Types -->
+      <div class="subsection" id="synthesis-types">
+        <h3 class="sub-title">Types of Synthesis Essays</h3>
+        <div class="grid3">
+          <div class="card" style="border-color:rgba(251,146,60,0.3)">
+            <div class="card-title" style="color:var(--accent4)">📊 Explanatory Synthesis</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Helps readers understand a complex topic.
+              Present facts, data, and different perspectives — <strong>no argument needed</strong>. Common in research
+              papers, literature reviews, and scientific articles.</p>
+          </div>
+          <div class="card" style="border-color:rgba(251,146,60,0.3)">
+            <div class="card-title" style="color:var(--accent4)">⚔️ Argumentative Synthesis</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Supports a <strong>controversial
+                position</strong> using data from multiple sources. Like an argumentative paper but considers the
+              relationships between references, especially opposing views.</p>
+          </div>
+          <div class="card" style="border-color:rgba(251,146,60,0.3)">
+            <div class="card-title" style="color:var(--accent4)">📚 Review Synthesis</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Summary of research to discover
+              <strong>previous findings</strong> on a topic. Instead of proving a point, you examine ideas. Thesis may
+              simply state that the issue needs more research.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Integrating Evidence -->
+      <div class="subsection" id="quoting">
+        <h3 class="sub-title">Integrating Source Evidence</h3>
+        <p>There are <strong>three main ways</strong> to integrate evidence from sources. All require citation because
+          you are using another person's words and/or ideas — even if you paraphrase.</p>
+
+        <div class="grid3">
+          <div class="card">
+            <div class="card-title">💬 Quoting</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Using the <em>exact words</em> of the
+              original source in quotation marks. Must cite.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">🔄 Paraphrasing</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Rewording a specific passage in your own
+              words. Close in length to the original. Must cite.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">📋 Summarizing</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.5rem 0 0">Condensing a large chunk of text to
+              capture only main ideas. Much shorter than original. Must cite.</p>
+          </div>
+        </div>
+
+        <!-- Quoting -->
+        <h4 class="sub-sub-title">When to Use Direct Quotations</h4>
+        <ul class="styled">
+          <li>When the original phrasing/imagery is <strong>irreplaceable</strong> and no paraphrase could be as
+            effective.</li>
+          <li>When the language itself is the <strong>focus of your analysis</strong> (e.g., analyzing rhetoric,
+            metaphor, or specific phrasing).</li>
+        </ul>
+
+        <div class="callout callout-orange">
+          <span class="callout-icon">⚠️</span>
+          <p><strong>Never "quote and run."</strong> A quotation does not speak for itself. Always use the
+            <strong>I.C.E. method</strong>: Introduce → Cite → Explain. Never leave your reader to determine the
+            relevance of a quotation without your analysis.
+          </p>
+        </div>
+
+        <h4 class="sub-sub-title">The "Quotation Sandwich"</h4>
+        <div class="card" style="border-color:rgba(251,146,60,0.3)">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:0.75rem 1rem;align-items:center">
+            <div
+              style="background:rgba(251,146,60,0.2);color:var(--accent4);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem;font-weight:700;text-align:center">
+              INTRODUCE</div>
+            <p style="margin:0;font-size:0.83rem;color:var(--subtle)">Set up the quotation: provide context, name the
+              author, explain what's happening</p>
+            <div
+              style="background:rgba(79,142,247,0.2);color:var(--accent);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem;font-weight:700;text-align:center">
+              CITE</div>
+            <p style="margin:0;font-size:0.83rem;color:var(--subtle)">Include the quotation with proper citation
+              (in-text reference)</p>
+            <div
+              style="background:rgba(52,211,153,0.2);color:var(--accent3);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.75rem;font-weight:700;text-align:center">
+              EXPLAIN</div>
+            <p style="margin:0;font-size:0.83rem;color:var(--subtle)">Analyze, explain, or interpret how the quotation
+              supports your argument</p>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">Three Grammatical Integration Methods</h4>
+
+        <div class="card">
+          <div class="card-title">Method 1: Seamless Integration</div>
+          <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0.6rem">Embed quoted words as an organic part
+            of your own sentence. No signal phrase needed — the quote flows naturally.</p>
+          <div class="example-box" style="margin:0">Dickens begins his novel with the paradoxical observation that the
+            eighteenth century was both "the best of times" and "the worst of times" [1].</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Method 2: Signal Phrase Method</div>
+          <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0.6rem">Use a signal phrase (Author + Verb) to
+            introduce the quotation, clearly indicating its source.</p>
+          <div class="example-box" style="margin:0">Describing the eighteenth century, Charles Dickens observes, "It was
+            the best of times, it was the worst of times" [1].</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Method 3: Colon Method</div>
+          <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0.6rem">When your introductory words form a
+            complete sentence, use a colon to introduce and set off the quotation (gives it added emphasis).</p>
+          <div class="example-box" style="margin:0">Dickens defines the eighteenth century as a time of paradox: "It was
+            the best of times, it was the worst of times" [1].</div>
+        </div>
+
+        <!-- Editing Quotations -->
+        <h4 class="sub-sub-title">Editing Quotations (When Needed)</h4>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">[ Square Brackets ]</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">Use to show <strong>changes or
+                additions</strong> you've made to a quote to fit your sentence grammatically.</p>
+            <div class="example-box" style="margin-top:0.5rem">Petroski observed that "[e]ngineers are always striving
+              for success…" [3].</div>
+          </div>
+          <div class="card">
+            <div class="card-title">… Ellipses (3 or 4 dots)</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">3 dots = words removed within a sentence.
+              4 dots = substantial text removed, including a sentence-ending period.</p>
+            <div class="example-box" style="margin-top:0.5rem">"Planners expected that when completed the … bridge would
+              set a world record…" [3].</div>
+          </div>
+        </div>
+
+        <!-- Paraphrase vs Summary -->
+        <h4 class="sub-sub-title">Paraphrase vs. Summary</h4>
+        <div class="compare">
+          <div class="compare-col col-a">
+            <div class="col-label">Paraphrase</div>
+            <ul>
+              <li>Focuses on a <strong>specific, small section</strong></li>
+              <li>May be close in length to original</li>
+              <li>Rewrites in your own words</li>
+              <li>Demonstrates detailed understanding</li>
+            </ul>
+          </div>
+          <div class="compare-col col-b">
+            <div class="col-label">Summary</div>
+            <ul>
+              <li>Condenses a <strong>large chunk</strong> of text</li>
+              <li>Much shorter than original</li>
+              <li>Captures only <strong>main ideas</strong></li>
+              <li>Useful for giving overview</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <span class="callout-icon">📌</span>
+          <p><strong>Important:</strong> Both paraphrase and summary require citations. You are still using someone
+            else's intellectual property — words, ideas, language structures, images, statistics, data, or formulas.</p>
+        </div>
+      </div>
+
+      <!-- Signal Verbs -->
+      <div class="subsection" id="signal-verbs">
+        <h3 class="sub-title">Signal Verbs</h3>
+        <p>Avoid overusing vague verbs like "says," "writes," or "discusses." Choose signal verbs that indicate the
+          <em>author's rhetorical purpose</em> — what is the author doing in that passage?
+        </p>
+
+        <div class="grid3">
+          <div class="card">
+            <div class="card-title">Verbs of Assertion</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">argues, claims, asserts, insists,
+              contends, maintains, declares</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Verbs of Analysis</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">analyzes, examines, explores,
+              investigates, compares, contrasts, evaluates</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Verbs of Description</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">describes, illustrates, portrays,
+              depicts, characterizes, presents</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Verbs of Agreement</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">agrees, confirms, supports, affirms,
+              concedes, acknowledges</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Verbs of Suggestion</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">suggests, proposes, recommends, urges,
+              advises, cautions, warns</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Verbs of Explanation</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">explains, clarifies, defines, notes,
+              observes, points out, reveals</p>
+          </div>
+        </div>
+
+        <h4 class="sub-sub-title">⚠️ Grammar Rule: "That" After Signal Verbs</h4>
+        <p>Some verbs can be directly followed by "that"; others require an <strong>object</strong> first.</p>
+
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">✅ Verbs that take "that" directly</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">thinks, believes, expects, decides,
+              knows, understands, says, admits, argues, agrees, claims, explains, suggests, etc.</p>
+            <div class="example-box" style="margin-top:0.5rem">"She argues <strong>that</strong> bottled water should be
+              banned."</div>
+          </div>
+          <div class="card">
+            <div class="card-title">❌ Verbs that need an object first</div>
+            <p style="font-size:0.82rem;color:var(--subtle);margin:0.4rem 0 0">tell, describe, convince, persuade,
+              inform, remind, analyze, summarize, support</p>
+            <div class="example-box" style="margin-top:0.5rem">
+              <span class="bad">"The author persuades that…" ✗</span><br>
+              <span class="good">"The author persuades readers that…" ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-orange">
+          <span class="callout-icon">🚫</span>
+          <p><strong>Common Errors to Avoid:</strong><br>
+            ✗ "The author persuades that…"<br>
+            ✗ "The writers convince that…"<br>
+            ✗ "He analyzes that…"<br>
+            ✗ "She informs that…"<br>
+            ✗ "They described that…"<br>
+            These are <strong>grammatically incorrect</strong> constructions.</p>
+        </div>
+
+        <!-- Sample Synthesis Elements -->
+        <h4 class="sub-sub-title">Sample Paraphrase</h4>
+        <div class="example-box">
+          At the end of its construction, the large cantilever bridge cost $25 million dollars, but the cost in lives
+          far exceeded the prediction of one death per million spent. While the planners hoped the bridge would set a
+          global record, its claim to fame was much more grim [3].
+        </div>
+
+        <h4 class="sub-sub-title">Sample Summary</h4>
+        <div class="example-box">
+          According to Petroski, a large bridge built in Quebec during the early twentieth century claimed the lives of
+          dozens of workers during its construction. The collapse early in construction represented a pivotal design
+          failure for Canadian engineers that shaped the profession [3].
+        </div>
+      </div>
+
+      <!-- Quick Synthesis Essay Guide -->
+      <div class="subsection">
+        <h3 class="sub-title">Writing a Synthesis Essay — Quick Guide</h3>
+        <div class="steps">
+          <div class="step">
+            <p><strong>Read all sources carefully.</strong> Identify the main argument, evidence, and tone of each
+              source. Note where they agree and disagree.</p>
+          </div>
+          <div class="step">
+            <p><strong>Develop your thesis.</strong> Your central argument must be your own — sources exist to
+              <em>support</em> you, not replace you. Write a clear, debatable thesis statement.
+            </p>
+          </div>
+          <div class="step">
+            <p><strong>Group sources by theme.</strong> Identify relationships between sources (agreement, disagreement,
+              partial overlap). This forms the backbone of your essay structure.</p>
+          </div>
+          <div class="step">
+            <p><strong>Integrate evidence using I.C.E.</strong> Introduce → Cite → Explain. Never quote and run. After
+              every piece of evidence, explain its relevance to your argument.</p>
+          </div>
+          <div class="step">
+            <p><strong>Cite both direct and indirect citations.</strong> Any use of another's words or ideas — whether
+              quoted, paraphrased, or summarized — requires a citation.</p>
+          </div>
+          <div class="step">
+            <p><strong>Use appropriate signal verbs.</strong> Choose verbs that accurately represent the author's
+              rhetorical purpose. Check grammar: does this verb need an object before "that"?</p>
+          </div>
+          <div class="step">
+            <p><strong>Conclude by synthesizing.</strong> Reinforce your argument; do not simply summarize. Show how the
+              sources collectively support your position or reveal a tension that you resolve.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      TBW Mid Notes · SS2007 Fall 2025 · Compiled from course slides (Pages 1–71) · All topics covered
+    </div>
+
+  </main>
+
+  <script>
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      document.getElementById('progress-bar').style.width = pct + '%';
+    });
+
+    // ─── MOBILE SIDEBAR TOGGLE ───
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      hamburger.classList.add('active');
+      overlay.classList.add('visible');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('active');
+      overlay.classList.remove('visible');
+    }
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+    overlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when a nav link is clicked (mobile)
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) closeSidebar();
+      });
+    });
+
+    // ─── ACTIVE NAV HIGHLIGHTING ───
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // Build ordered list of tracked elements from sidebar links (document order)
+    const trackedElements = [];
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const el = document.getElementById(href.slice(1));
+        if (el) trackedElements.push(el);
+      }
+    });
+
+    // Sort by actual document position to ensure correct order
+    trackedElements.sort((a, b) => {
+      const aRect = a.getBoundingClientRect();
+      const bRect = b.getBoundingClientRect();
+      return (aRect.top + window.scrollY) - (bRect.top + window.scrollY);
+    });
+
+    // Helper: get absolute top of an element relative to the document
+    function getAbsoluteTop(el) {
+      let top = 0;
+      while (el) {
+        top += el.offsetTop;
+        el = el.offsetParent;
+      }
+      return top;
+    }
+
+    function updateActiveNav() {
+      let currentId = '';
+      const scrollPos = window.scrollY + 150;
+
+      // Walk through tracked elements and pick the last one whose top is above scrollPos
+      for (let i = 0; i < trackedElements.length; i++) {
+        const elTop = getAbsoluteTop(trackedElements[i]);
+        if (elTop <= scrollPos) {
+          currentId = trackedElements[i].id;
+        } else {
+          break;
+        }
+      }
+
+      // If at very top, highlight first item
+      if (!currentId && trackedElements.length > 0) {
+        currentId = trackedElements[0].id;
+      }
+
+      // If scrolled to the very bottom, activate the last section
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 50) {
+        currentId = trackedElements[trackedElements.length - 1]?.id || currentId;
+      }
+
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === '#' + currentId);
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    window.addEventListener('DOMContentLoaded', updateActiveNav);
+    updateActiveNav();
+  </script>
+</body>
+
+</html>
