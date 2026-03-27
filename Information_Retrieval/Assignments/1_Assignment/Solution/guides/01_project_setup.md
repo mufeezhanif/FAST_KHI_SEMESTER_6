@@ -10,19 +10,18 @@ pip install --upgrade pip
 
 ## 2) Install Libraries
 
-Use these beginner-friendly libraries:
+Use minimal libraries:
 - `streamlit`: GUI
-- `nltk`: stemming and token helpers
+- Python standard library for all IR logic
 
 ```bash
-pip install streamlit nltk
+pip install streamlit
 ```
 
 ## 3) requirements.txt
 
 ```txt
 streamlit==1.44.1
-nltk==3.9.1
 ```
 
 ## 4) Essential Python Concepts You Will Use
@@ -53,3 +52,12 @@ streamlit run app.py
 - Keep functions small and focused.
 - Add clear comments only where logic is non-obvious.
 - Save indexes to disk and load them (required by rubric).
+
+## 8) From-Scratch Coding Rule (Your Preference)
+For this project, implement core logic yourself:
+- Boolean retrieval: your own set/loop logic
+- Query parsing: your own tokenizer and parser
+- Stemming: your own suffix rules (no NLP libraries)
+- Tokenization: your own character-by-character tokenizer
+
+Use external libraries only for UI (`streamlit`) and optional plotting.

@@ -12,7 +12,7 @@ Must-have features:
 - Result count
 
 Bonus-friendly features:
-- Sidebar showing preprocessing options used (lowercase, stopword removal, stemming)
+- Sidebar showing preprocessing options used (lowercase, stopword removal, custom stemming)
 - Expandable panel to show parsed tokens and postfix expression
 - Display matched snippets (first 1-2 lines from each doc)
 - Timing info (query execution in milliseconds)
@@ -36,7 +36,7 @@ def main():
         st.markdown("### Preprocessing")
         st.write("- Case Folding")
         st.write("- Stopword Removal")
-        st.write("- Porter Stemming")
+        st.write("- Custom Rule-Based Stemming")
 
     query_type = st.selectbox(
         "Select Query Type",

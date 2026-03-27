@@ -1,0 +1,6 @@
+#!/home/mufeez/Documents/FAST_KHI_SEMESTER_6/Information_Retrieval/Assignments/1_Assignment/Solution/.venv/bin/python3
+import sys
+from numpy.f2py.f2py2e import main
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(main())

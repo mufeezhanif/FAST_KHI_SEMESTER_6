@@ -2,6 +2,8 @@
 
 This part is worth marks directly. Build it carefully.
 
+Important: this version uses a from-scratch approach with pure Python logic.
+
 ## What to Implement
 - Read all speech files.
 - Normalize text (lowercase).
@@ -12,11 +14,7 @@ This part is worth marks directly. Build it carefully.
 ## Suggested File: `src/preprocessing.py`
 
 ```python
-import re
 from typing import List, Set
-from nltk.stem import PorterStemmer
-
-stemmer = PorterStemmer()
 
 
 def load_stopwords(path: str) -> Set[str]:
@@ -30,8 +28,48 @@ def load_stopwords(path: str) -> Set[str]:
 
 
 def tokenize(text: str) -> List[str]:
-    # Keep alphabetic and numeric words; split punctuation.
-    return re.findall(r"[a-zA-Z0-9]+", text.lower())
+    # Manual tokenizer: keep only alphanumeric sequences.
+    text = text.lower()
+    tokens = []
+    current = []
+
+    for ch in text:
+        if ("a" <= ch <= "z") or ("0" <= ch <= "9"):
+            current.append(ch)
+        else:
+            if current:
+                tokens.append("".join(current))
+                current = []
+
+    if current:
+        tokens.append("".join(current))
+
+    return tokens
+
+
+def stem_word(word: str) -> str:
+    # Lightweight custom stemmer (rule-based suffix stripping).
+    # This is intentionally simple and educational.
+    if len(word) <= 3:
+        return word
+
+    rules = [
+        ("ingly", ""),
+        ("edly", ""),
+        ("ing", ""),
+        ("ed", ""),
+        ("ies", "y"),
+        ("sses", "ss"),
+        ("s", ""),
+        ("ly", ""),
+        ("ment", ""),
+    ]
+
+    for suffix, replacement in rules:
+        if word.endswith(suffix) and len(word) > len(suffix) + 2:
+            return word[: -len(suffix)] + replacement
+
+    return word
 
 
 def normalize_tokens(tokens: List[str], stopwords: Set[str]) -> List[str]:
@@ -39,7 +77,7 @@ def normalize_tokens(tokens: List[str], stopwords: Set[str]) -> List[str]:
     for tok in tokens:
         if tok in stopwords:
             continue
-        cleaned.append(stemmer.stem(tok))
+        cleaned.append(stem_word(tok))
     return cleaned
 
 
@@ -51,6 +89,8 @@ def preprocess_text(text: str, stopwords: Set[str]) -> List[str]:
 ## Important Design Decision
 Use **same preprocessing for both documents and query terms**.
 If documents are stemmed but query terms are not stemmed, retrieval will fail.
+
+Because you are implementing stemming manually, make sure query terms also go through `stem_word()`.
 
 ## Suggested File: `src/io_utils.py`
 
@@ -86,3 +126,14 @@ print(len(raw_tokens), len(clean), clean[:20])
 - Forgetting to strip lines while reading stopwords.
 - Using different tokenization for query and documents.
 - Not converting to lowercase consistently.
+- Over-aggressive stemming rules that cut too much text.
+
+## Suggested Improvement (Optional)
+Create a `debug_stemming_examples()` function and print examples:
+
+```python
+def debug_stemming_examples():
+    words = ["running", "wanted", "actions", "policies", "government"]
+    for w in words:
+        print(w, "->", stem_word(w))
+```
