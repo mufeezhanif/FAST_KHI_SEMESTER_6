@@ -14,14 +14,15 @@ Build a Boolean Information Retrieval system over the Trump speeches dataset wit
 ## Recommended Order
 1. Read `guides/01_project_setup.md`
 2. Implement preprocessing from `guides/02_preprocessing_pipeline.md`
-3. Build and persist inverted index from `guides/03_inverted_index.md`
-4. Build and persist positional index from `guides/04_positional_index.md`
-5. Implement simple Boolean retrieval from `guides/05_boolean_retrieval.md`
-6. Implement complex Boolean retrieval from `guides/06_complex_boolean_queries.md`
-7. Implement proximity queries from `guides/07_proximity_queries.md`
-8. Build Streamlit GUI from `guides/08_streamlit_ui_guide.md`
-9. Evaluate against provided queries using `guides/09_testing_evaluation_bonus.md`
-10. Final polish and submission from `guides/10_submission_checklist.md`
+3. Implement stemming deeply from `guides/02b_stemming_from_scratch.md`
+4. Build and persist inverted index from `guides/03_inverted_index.md`
+5. Build and persist positional index from `guides/04_positional_index.md`
+6. Implement simple Boolean retrieval from `guides/05_boolean_retrieval.md`
+7. Implement complex Boolean retrieval from `guides/06_complex_boolean_queries.md`
+8. Implement proximity queries from `guides/07_proximity_queries.md`
+9. Build Streamlit GUI from `guides/08_streamlit_ui_guide.md`
+10. Evaluate against provided queries using `guides/09_testing_evaluation_bonus.md`
+11. Final polish and submission from `guides/10_submission_checklist.md`
 
 ## Suggested Project Structure
 Create this structure before coding:
